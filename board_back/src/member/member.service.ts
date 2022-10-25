@@ -18,23 +18,10 @@ export class MemberService {
     });
   }
 
-  // create(createMemberInput: CreateMemberInput) {
-  //   return 'This action adds a new member';
-  // }
+  // 서비스
+  // 리턴을 아웃풋으로 받게
 
   findAll() {
-    return `This action returns all member`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} member`;
-  }
-
-  update(id: number, updateMemberInput: UpdateMemberInput) {
-    return `This action updates a #${id} member`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} member`;
+    return this.memberRepository.find();
   }
 }

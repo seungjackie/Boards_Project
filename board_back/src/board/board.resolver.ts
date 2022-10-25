@@ -13,23 +13,13 @@ export class BoardResolver {
     return this.boardService.create(createBoardInput);
   }
 
-  @Query(() => [Board], { name: 'board' })
+  @Query(() => [Board], { name: 'boardAll' })
   findAll() {
     return this.boardService.findAll();
   }
 
-  @Query(() => Board, { name: 'board' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.boardService.findOne(id);
-  }
-
-  @Mutation(() => Board)
-  updateBoard(@Args('updateBoardInput') updateBoardInput: UpdateBoardInput) {
-    return this.boardService.update(updateBoardInput.id, updateBoardInput);
-  }
-
-  @Mutation(() => Board)
-  removeBoard(@Args('id', { type: () => Int }) id: number) {
-    return this.boardService.remove(id);
+  @Query(() => Board, { name: 'boardOne' })
+  findOne(@Args('uId_board', { type: () => String }) uuid: string) {
+    return this.boardService.findOne(uuid);
   }
 }

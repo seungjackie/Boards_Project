@@ -29,22 +29,17 @@ type Board {
 }
 
 type Query {
-  department(id: Int!): Department!
-  file(id: Int!): File!
-  board(id: Int!): Board!
+  boardAll: [Board!]!
+  departmentAll: [Department!]!
+  departmentOne(uId_department: String!): Department!
+  boardOne(uId_board: String!): Board!
 }
 
 type Mutation {
   createMember(createMemberInput: CreateMemberInput!): Member!
   createDepartment(createDepartmentInput: CreateDepartmentInput!): Department!
-  updateDepartment(updateDepartmentInput: UpdateDepartmentInput!): Department!
-  removeDepartment(id: Int!): Department!
   createFile(createFileInput: CreateFileInput!): File!
-  updateFile(updateFileInput: UpdateFileInput!): File!
-  removeFile(id: Int!): File!
   createBoard(createBoardInput: CreateBoardInput!): Board!
-  updateBoard(updateBoardInput: UpdateBoardInput!): Board!
-  removeBoard(id: Int!): Board!
 }
 
 input CreateMemberInput {
@@ -69,27 +64,9 @@ input CreateDepartmentInput {
   mst: String!
 }
 
-input UpdateDepartmentInput {
-  """서비스 개발 팀 :"""
-  sdt: String
-
-  """신성장 기술팀 :"""
-  ngtt: String
-
-  """경영 지원부 : """
-  mst: String
-  id: Int!
-}
-
 input CreateFileInput {
   """FILE 이름"""
   fName: String!
-}
-
-input UpdateFileInput {
-  """FILE 이름"""
-  fName: String
-  id: Int!
 }
 
 input CreateBoardInput {
@@ -98,13 +75,4 @@ input CreateBoardInput {
 
   """ 본문 내용"""
   contents: String!
-}
-
-input UpdateBoardInput {
-  """타이틀 : """
-  title: String
-
-  """ 본문 내용"""
-  contents: String
-  id: Int!
 }

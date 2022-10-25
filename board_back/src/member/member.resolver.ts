@@ -14,4 +14,9 @@ export class MemberResolver {
   ) {
     return this.memberService.create(createMemberInput);
   }
+
+  @Query(() => [Member], { name: 'boardAll' })
+  findAll() {
+    return this.memberService.findAll();
+  }
 }
