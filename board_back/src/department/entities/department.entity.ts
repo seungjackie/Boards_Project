@@ -1,29 +1,21 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import {
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Member } from 'src/member/entities/member.entity';
 
-@Entity()
+@Entity({
+  // synchronize: false, // 설정할 시 스키머 싱크를 건너뜀
+})
 @ObjectType()
 export class Department {
   @PrimaryGeneratedColumn('uuid')
   @Field(() => String)
-  uid_deaprtment: string;
+  uId_department: string;
 
-  @Column({ type: 'varchar', length: '255' })
+  @Column({ type: 'varchar', unique: true })
   @Field(() => String)
-  sdt: string;
+  dName: string;
 
-  @Column({ type: 'varchar', length: '255' })
-  @Field(() => String)
-  ngtt: string;
-
-  @Column({ type: 'varchar', length: '255' })
-  @Field(() => String)
-  mst: string;
+  // 해당 엔티티에서 대상 엔티티로 보내주겠다.
+  // @OneToMany(() => Member, (member) => member.department) // 멤버에 부서명을 보내겠다.
+  // member: Member[]; // entity접근
 }

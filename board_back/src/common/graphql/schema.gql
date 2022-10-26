@@ -3,16 +3,14 @@
 # ------------------------------------------------------
 
 type Department {
-  uid_deaprtment: String!
-  sdt: String!
-  ngtt: String!
-  mst: String!
+  uId_department: String!
+  dName: String!
 }
 
 type Member {
   uId_member: String!
   mId: String!
-  mPw: String!
+  mPw: Int!
   mName: String!
 }
 
@@ -47,21 +45,15 @@ input CreateMemberInput {
   mId: String!
 
   """멤버 비밀번호"""
-  mPw: String!
+  mPw: Int!
 
   """멤버 이름"""
   mName: String!
 }
 
 input CreateDepartmentInput {
-  """서비스 개발 팀 :"""
-  sdt: String!
-
-  """신성장 기술팀 :"""
-  ngtt: String!
-
-  """경영 지원부 : """
-  mst: String!
+  """ 개발팀 """
+  dName: String!
 }
 
 input CreateFileInput {

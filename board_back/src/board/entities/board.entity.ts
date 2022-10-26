@@ -23,8 +23,8 @@ export class Board {
   @Field(() => String)
   contents: string;
 
-  @Column({ type: 'varchar', default: '0' })
-  @Field(() => Number)
+  @Column({ type: 'int', default: '0' })
+  @Field()
   cnt: number;
 
   @CreateDateColumn()
