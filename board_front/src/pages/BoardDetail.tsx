@@ -1,12 +1,14 @@
 import React from "react";
+import DetailBoard from "../components/DetailBoard";
+import "./BoardDetail.css";
 
+// interface propsType {
+//   boardData: any;
+// }
 const BoardDetail = () => {
   return (
     <div>
-      <div className="main_detail">
-        <div>title</div>
-        <div>contents</div>
-      </div>
+      <DetailBoard />
     </div>
   );
 };

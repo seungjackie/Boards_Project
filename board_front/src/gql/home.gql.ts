@@ -5,9 +5,11 @@ export const GET_BOARD = gql`
     boardAll {
       title
       contents
+      uId_borad
     }
   }
 `;
+
 export const POST_MEMBER = gql`
   mutation {
     createBoard(
