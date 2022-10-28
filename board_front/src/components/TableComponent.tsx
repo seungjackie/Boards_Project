@@ -20,14 +20,11 @@ const TableComponent = ({ boardData, key }: propsType) => {
   const id = boardData?.uId_borad;
 
   const goToDetail = () => {
-    naviate(
-      `/board/${id}`
-      // {
-      //   state: {
-      //     data: boardData,
-      //   },
-      // }
-    );
+    naviate(`/board/${id}`, {
+      state: {
+        data: boardData,
+      },
+    });
   };
   console.log(boardData);
   // console.log(boardData?.uId_borad, "board data");
