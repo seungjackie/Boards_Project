@@ -30,7 +30,7 @@ const DetailBoard = (props: any) => {
     <div className="DetailMain">
       <div className="container1">
         <div className="div1">작성일</div>
-        <div className="div2">2022/10/27</div>
+        <div className="div2">{boardData.createTime}</div>
         <div className="div3">작성자</div>
         <div className="div4">박승재 / 신성장 기술팀</div>
       </div>

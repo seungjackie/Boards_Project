@@ -6,15 +6,14 @@ export const GET_BOARD = gql`
       title
       contents
       uId_borad
+      createTime
     }
   }
 `;
 
 export const POST_MEMBER = gql`
   mutation {
-    createBoard(
-      createBoardInput: { title: "멋있는 타이틀", contents: "멋있는 내용" }
-    ) {
+    createBoard(createBoardInput: { title: "", contents: "" }) {
       title
       contents
     }

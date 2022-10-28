@@ -36,12 +36,6 @@ const TableComponent = ({ boardData, key }: propsType) => {
       <td>{boardData.title}</td>
       <td>{boardData.contents}</td>
       <td>1 </td>
-      {/* {boardData.map((board: any, index: any) => ( */}
-      {/* <td>{boardData + 1}</td> */}
-      {/* <td>{boardData.title}</td> */}
-      {/* <td>{board.contents}</td> */}
-      {/* <td>0</td> */}
-      {/* ))} */}
     </tr>
   );
 };

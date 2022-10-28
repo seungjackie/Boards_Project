@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import "./Home.css";
 import { gql, useQuery } from "@apollo/client";
-import { Link, Route, useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import { GET_BOARD, POST_MEMBER } from "../gql/home.gql";
@@ -11,11 +10,14 @@ import TableComponent from "../components/TableComponent";
 import BoardDetail from "./BoardDetail";
 
 function Home() {
-  const naviate = useNavigate();
-
   const { loading, error, data } = useQuery(GET_BOARD);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error!(</p>;
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]); // 바뀌는 값 적용
+
+  if (loading) return <Loading />;
+  if (error) return <Error />;
 
   return (
     <div>

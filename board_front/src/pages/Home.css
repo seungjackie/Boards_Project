@@ -12,7 +12,8 @@
   height: 30px;
   /* color: green; */
   border: 1px solid green;
-  background-color: bisque;
+  background-color: blue;
+  color: white;
   margin-left: 20%;
   margin-top: 10%;
 }

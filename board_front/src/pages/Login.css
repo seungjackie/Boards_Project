@@ -11,8 +11,20 @@
   height: 50vh;
   /* margin-top: auto; */
   border: 1px solid black;
-  width: 50%;
+  width: 400px;
   background-color: lightcyan;
+  margin-left: auto;
+  margin-right: auto;
+}
+.mb-3 {
+  width: 250px;
+}
+
+.login {
+}
+
+.input_id {
+  width: 100%;
 }
 
 .Id_title {

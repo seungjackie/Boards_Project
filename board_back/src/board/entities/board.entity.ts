@@ -27,6 +27,7 @@ export class Board {
   @Field()
   cnt: number;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamp' })
+  @Field()
   createTime: Date;
 }
