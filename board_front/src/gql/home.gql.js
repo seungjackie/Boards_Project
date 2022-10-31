@@ -1,12 +1,13 @@
 import gql from "graphql-tag";
 
 export const GET_BOARD = gql`
-  query {
+  query boardAll {
     boardAll {
       title
+      cnt
       contents
-      uId_borad
       createTime
+      boardNum
     }
   }
 `;

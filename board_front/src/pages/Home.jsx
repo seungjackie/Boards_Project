@@ -13,7 +13,7 @@ function Home() {
   const { loading, error, data } = useQuery(GET_BOARD);
 
   useEffect(() => {
-    console.log(data);
+    // console.log(data);
   }, [data]); // 바뀌는 값 적용
 
   if (loading) return <Loading />;
@@ -36,8 +36,10 @@ function Home() {
             </tr>
           </thead>
           <tbody>
-            {data?.boardAll.map((board /* : any */, index /* : number */) => {
-              return <TableComponent key={index} boardData={board} index={0} />;
+            {data?.boardAll.map((board, index) => {
+              return (
+                <TableComponent key={index} index={index} boardData={board} />
+              );
             })}
           </tbody>
         </Table>

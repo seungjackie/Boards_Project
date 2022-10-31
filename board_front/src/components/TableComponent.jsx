@@ -2,20 +2,14 @@ import React from "react";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
 
-// import "../pages/Home.css";
-
-// interface propsType {
-//   boardData: {
-//     title: string;
-//     contents: string;
-//     uId_borad: string;
-//   };
-//   key: number;
-//   index: number;
-// }
-
-const TableComponent = ({ boardData, key } /* : propsType */) => {
+const TableComponent = ({ boardData, key, index }) => {
   const naviate = useNavigate();
+
+  // console.log(key);
+  // console.log(index);
+  console.log(boardData.index, "<<<<<<<<<<< index");
+  console.log(index, "<<<<<<<<inininin");
+  console.log(boardData.length, "snjnjn");
 
   const id = boardData?.uId_borad;
 
@@ -27,12 +21,10 @@ const TableComponent = ({ boardData, key } /* : propsType */) => {
     });
   };
   console.log(boardData);
-  // console.log(boardData?.uId_borad, "board data");
-  // console.log(key);
 
   return (
     <tr onClick={() => goToDetail()}>
-      <td>1</td>
+      <td> No. {index + 1}</td>
       <td>{boardData.title}</td>
       <td>{boardData.contents}</td>
       <td>1 </td>
