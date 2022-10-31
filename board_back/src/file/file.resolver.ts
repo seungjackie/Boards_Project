@@ -13,15 +13,15 @@ export class FileResolver {
     return this.fileService.create(createFileInput);
   }
 
-  // @Query(() => [File], { name: 'file' })
-  // findAll() {
-  //   return this.fileService.findAll();
-  // }
+  @Query(() => [File], { name: 'fileAll' })
+  findAll() {
+    return this.fileService.findAll();
+  }
 
-  // @Query(() => File, { name: 'file' })
-  // findOne(@Args('id', { type: () => Int }) id: number) {
-  //   return this.fileService.findOne(id);
-  // }
+  @Query(() => File, { name: 'fileOne' })
+  findOne(@Args('fileNum', { type: () => Int }) fileNum: string) {
+    return this.fileService.findOne(fileNum);
+  }
 
   // @Mutation(() => File)
   // updateFile(@Args('updateFileInput') updateFileInput: UpdateFileInput) {

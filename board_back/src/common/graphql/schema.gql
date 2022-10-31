@@ -3,28 +3,31 @@
 # ------------------------------------------------------
 
 type Department {
-  uId_department: String!
-  dName: String!
+  deptCode: String!
+  deptName: String!
 }
 
-type Member {
-  uId_member: String!
-  mId: String!
-  mPw: Int!
-  mName: String!
+type User {
+  userNum: String!
+  userId: String!
+  userPw: Int!
+  userName: String!
+  deptCode: String!
 }
 
 type File {
-  uId_file: String!
-  fName: String!
+  fileNum: String!
+  fileName: String!
 }
 
 type Board {
-  uId_borad: String!
+  boardNum: String!
   title: String!
   contents: String!
   cnt: Float!
   createTime: DateTime!
+  userNum: String!
+  fileNum: String!
 }
 
 """
@@ -33,44 +36,69 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Query {
-  boardAll: [Board!]!
+  userAll: [User!]!
+  userOne(userNum: String!): [User!]!
   departmentAll: [Department!]!
-  departmentOne(uId_department: String!): Department!
-  boardOne(uId_board: String!): Board!
+  departmentOne(deptCode: String!): Department!
+  fileAll: [File!]!
+  fileOne(fileNum: Int!): File!
+  boardAll: [Board!]!
+  boardOne(boardNum: String!): Board!
 }
 
 type Mutation {
-  createMember(createMemberInput: CreateMemberInput!): Member!
+  createUser(createUserInput: CreateUserInput!): User!
   createDepartment(createDepartmentInput: CreateDepartmentInput!): Department!
   createFile(createFileInput: CreateFileInput!): File!
   createBoard(createBoardInput: CreateBoardInput!): Board!
 }
 
-input CreateMemberInput {
-  """멤버 아이디"""
-  mId: String!
+input CreateUserInput {
+  """사번"""
+  userNum: String!
 
-  """멤버 비밀번호"""
-  mPw: Int!
+  """유저 Id"""
+  userId: String!
 
-  """멤버 이름"""
-  mName: String!
+  """유저 패스워드"""
+  userPw: Int!
+
+  """유저 이름"""
+  userName: String!
+
+  """유저 이름"""
+  deptCode: String!
 }
 
 input CreateDepartmentInput {
+  """부서 코드"""
+  deptCode: String!
+
   """ 개발팀 """
-  dName: String!
+  deptName: String!
 }
 
 input CreateFileInput {
+  """사번"""
+  fileNum: String!
+
   """FILE 이름"""
-  fName: String!
+  fileName: String!
 }
 
 input CreateBoardInput {
+  """사번"""
+  boardNum: String!
+
   """타이틀 : """
   title: String!
 
   """ 본문 내용"""
   contents: String!
+
+  """ 본문 내용"""
+  userNum: String!
+
+  """ 본문 내용"""
+  fileNum: String!
 }

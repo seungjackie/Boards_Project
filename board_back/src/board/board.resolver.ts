@@ -19,7 +19,7 @@ export class BoardResolver {
   }
 
   @Query(() => Board, { name: 'boardOne' })
-  findOne(@Args('uId_board', { type: () => String }) uuid: string) {
-    return this.boardService.findOne(uuid);
+  findOne(@Args('boardNum', { type: () => String }) boardNum: string) {
+    return this.boardService.findOne(boardNum);
   }
 }

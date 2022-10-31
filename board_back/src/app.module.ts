@@ -5,14 +5,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DepartmentModule } from './department/department.module';
-import { MemberModule } from './member/member.module';
+import { UserModule } from './user/user.module';
 import { typeORMConfig } from './config/typeorm.config';
 import { FileModule } from './file/file.module';
 import { BoardModule } from './board/board.module';
 
 @Module({
   imports: [
-    MemberModule,
+    UserModule,
     GraphQLModule.forRoot({
       driver: ApolloDriver,
       autoSchemaFile: 'src/common/graphql/schema.gql',

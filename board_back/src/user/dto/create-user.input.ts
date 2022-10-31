@@ -1,0 +1,22 @@
+import { InputType, Int, Field } from '@nestjs/graphql';
+
+@InputType()
+export class CreateUserInput {
+  @Field(() => String, { description: '사번' })
+  userNum: string;
+
+  @Field(() => String, { description: '유저 Id' })
+  userId: string;
+
+  @Field(() => Int, { description: '유저 패스워드' })
+  userPw: number;
+
+  @Field(() => String, { description: '유저 이름' })
+  userName: string;
+
+  @Field(() => String, { description: '유저 이름' })
+  deptCode: string;
+
+  // @Field(() => String, { description: ' 부서명' })
+  // dName: string;
+}

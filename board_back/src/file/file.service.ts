@@ -18,13 +18,13 @@ export class FileService {
     });
   }
 
-  // findAll() {
-  //   return `This action returns all file`;
-  // }
+  findAll() {
+    return this.fileRepository.find();
+  }
 
-  // findOne(id: string) {
-  //   return this.fileRepository.findOne(id);
-  // }
+  findOne(id: string) {
+    return this.fileRepository[0].findOne(id);
+  }
 
   // update(id: number, updateFileInput: UpdateFileInput) {
   //   return `This action updates a #${id} file`;

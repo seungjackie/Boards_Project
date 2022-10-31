@@ -2,6 +2,7 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Department } from 'src/department/entities/department.entity';
 import {
   Column,
+  PrimaryColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -10,26 +11,31 @@ import {
 
 @Entity()
 @ObjectType()
-export class Member {
-  @PrimaryGeneratedColumn('uuid')
+export class User {
+  @PrimaryColumn({ type: 'varchar', length: '7' })
   @Field(() => String)
-  uId_member: string;
+  userNum: string;
 
   @Column({ type: 'varchar', length: '255' })
   @Field(() => String)
-  mId: string;
+  userId: string;
 
   @Column({ type: 'int' })
   @Field(() => Int)
-  mPw: number;
+  userPw: number;
 
   @Column({ type: 'varchar', length: '50' })
   @Field(() => String)
-  mName: string;
+  userName: string;
+
+  @Column({ type: 'varchar', length: '255' })
+  @Field(() => String)
+  deptCode: string;
 
   // @Column({ type: 'varchar' })
   // @Field()
   // dName: string;
+  // deptName: string;
 
   // // 해당 엔티티 to 대상 엔티티(department) 여러유저는 하나의 부서명에서 받겠다.
   // @ManyToOne(() => Department, (department) => department.dName)

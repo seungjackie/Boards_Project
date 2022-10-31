@@ -6,16 +6,17 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  PrimaryColumn,
 } from 'typeorm';
 
 @Entity()
 @ObjectType()
 export class File {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn({ type: 'varchar', length: '7' })
   @Field(() => String)
-  uId_file: string;
+  fileNum: string;
 
   @Column({ type: 'varchar', length: '255' })
   @Field(() => String)
-  fName: string;
+  fileName: string;
 }

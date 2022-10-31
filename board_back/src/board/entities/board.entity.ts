@@ -6,14 +6,15 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  PrimaryColumn,
 } from 'typeorm';
 
 @Entity()
 @ObjectType()
 export class Board {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn({ type: 'varchar', length: '7' })
   @Field(() => String)
-  uId_borad: string;
+  boardNum: string;
 
   @Column({ type: 'varchar', length: '255' })
   @Field(() => String)
@@ -30,4 +31,18 @@ export class Board {
   @CreateDateColumn({ type: 'timestamp' })
   @Field()
   createTime: Date;
+
+  @Column({ type: 'varchar', length: '255' })
+  @Field(() => String)
+  userNum: string;
+
+  @Column({ type: 'varchar', length: '255', nullable: true })
+  @Field(() => String)
+  fileNum: string;
+
+  // !todo 작성자
+  // userName
+
+  // !todo 파일
+  // deptName
 }
