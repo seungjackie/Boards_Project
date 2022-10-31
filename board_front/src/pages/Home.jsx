@@ -4,7 +4,7 @@ import "./Home.css";
 import { gql, useQuery } from "@apollo/client";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
-import { GET_BOARD, POST_MEMBER } from "../gql/home.gql";
+import { GET_BOARD, POST_BOARD } from "../gql/home.gql";
 import { useParams } from "react-router-dom";
 import TableComponent from "../components/TableComponent";
 import BoardDetail from "./BoardDetail";
@@ -36,7 +36,7 @@ function Home() {
             </tr>
           </thead>
           <tbody>
-            {data?.boardAll.map((board: any, index: number) => {
+            {data?.boardAll.map((board /* : any */, index /* : number */) => {
               return <TableComponent key={index} boardData={board} index={0} />;
             })}
           </tbody>

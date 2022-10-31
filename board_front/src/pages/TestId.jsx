@@ -15,7 +15,7 @@ const TestId = () => {
     <div>
       <p>지금 파라미터는 {id} 입니다.</p>
       <div>
-        {data.boardAll.map((board: any) => (
+        {data.boardAll.map((board /* : any */) => (
           <>
             <div>{board.uId_borad}</div>
             <div>{board.title}</div>

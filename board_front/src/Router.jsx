@@ -7,7 +7,7 @@ import Login from "./pages/Login";
 import Test from "./pages/Test";
 import TestId from "./pages/TestId";
 
-function Router(props: any) {
+function Router(props) {
   let { id } = useParams();
 
   return (

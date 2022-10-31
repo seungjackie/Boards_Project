@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
-const DetailBoard = (props: any) => {
+const DetailBoard = (/* props: any */) => {
   const location = useLocation();
   //   console.log(state, "<<< state");
   //   let { id } = useParams();
   //   console.log(id);
 
-  const state = location.state as { data: any };
+  const state = location.state;
+  // as { data: any };
   const boardData = state.data;
   console.log(boardData);
 

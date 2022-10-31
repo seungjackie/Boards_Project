@@ -11,7 +11,7 @@ export const GET_BOARD = gql`
   }
 `;
 
-export const POST_MEMBER = gql`
+export const POST_BOARD = gql`
   mutation {
     createBoard(createBoardInput: { title: "", contents: "" }) {
       title

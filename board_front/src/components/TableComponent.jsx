@@ -4,17 +4,17 @@ import { useNavigate } from "react-router-dom";
 
 // import "../pages/Home.css";
 
-interface propsType {
-  boardData: {
-    title: string;
-    contents: string;
-    uId_borad: string;
-  };
-  key: number;
-  index: number;
-}
+// interface propsType {
+//   boardData: {
+//     title: string;
+//     contents: string;
+//     uId_borad: string;
+//   };
+//   key: number;
+//   index: number;
+// }
 
-const TableComponent = ({ boardData, key }: propsType) => {
+const TableComponent = ({ boardData, key } /* : propsType */) => {
   const naviate = useNavigate();
 
   const id = boardData?.uId_borad;

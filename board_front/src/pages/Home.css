@@ -14,7 +14,7 @@
   border: 1px solid green;
   background-color: blue;
   color: white;
-  margin-left: 20%;
+  margin-left: 50px;
   margin-top: 10%;
 }
 
@@ -25,7 +25,8 @@
 
 .board_read {
   margin-top: 20px;
-  margin-left: 20px;
+  margin-left: 2%;
+  margin-right: 2%;
   /* border-bottom: 3px solid black;
   margin-bottom: 20px; */
   /* width: 1000px; */
@@ -39,7 +40,8 @@
   width: 400px;
   /* display: flex; */
   flex-direction: column;
-  margin-left: 50%;
+  margin-left: 100px;
+  margin-right: auto;
   justify-content: center;
   margin-top: 10%;
   padding: 10px 8px 10px 6px;
