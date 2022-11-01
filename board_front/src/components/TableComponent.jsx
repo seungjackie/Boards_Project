@@ -1,15 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
+import Pagination from "./Pagination";
 
 const TableComponent = ({ boardData, key, index }) => {
   const naviate = useNavigate();
-
-  // console.log(key);
-  // console.log(index);
-  console.log(boardData.index, "<<<<<<<<<<< index");
-  console.log(index, "<<<<<<<<inininin");
-  console.log(boardData.length, "snjnjn");
+  const [posts, setPosts] = useState([boardData]);
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * limit;
 
   const id = boardData?.uId_borad;
 

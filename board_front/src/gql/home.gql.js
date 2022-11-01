@@ -20,3 +20,15 @@ export const POST_BOARD = gql`
     }
   }
 `;
+
+export const GET_USER = gql`
+  query userAll {
+    userAll {
+      userId
+      userPw
+      userNum
+      userName
+      deptCode
+    }
+  }
+`;

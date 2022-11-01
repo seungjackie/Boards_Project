@@ -20,3 +20,11 @@ export class CreateUserInput {
   // @Field(() => String, { description: ' 부서명' })
   // dName: string;
 }
+
+export class CreateUserDto {
+  userId: string;
+  email: string;
+  name: string;
+  password: string;
+}
+export default CreateUserDto;
