@@ -5,13 +5,16 @@ import { gql, useQuery } from "@apollo/client";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import { GET_BOARD, POST_BOARD } from "../gql/home.gql";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TableComponent from "../components/TableComponent";
 import Pagination from "../components/Pagination";
 import Searchbar from "../components/Searchbar";
+import LabelOption from "../components/LabelOption";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Home() {
   const { loading, error, data } = useQuery(GET_BOARD);
+  const navigate = useNavigate();
 
   // 5개의 게시물로 보여주겠다.
   const [limit, setLimit] = useState(5);
@@ -20,6 +23,28 @@ function Home() {
   // 페이지 -1에서 자르겟다.
   const offset = (page - 1) * limit;
 
+  // 검색
+  const [search, setSearch] = useState("");
+
+  const onChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  // 글작성 이동
+  const goToPostBoard = () => {
+    console.log("hhh");
+    navigate("/baordpost");
+  };
+
+  // title 검색
+  const boardTitle = data?.boardAll.filter((board) => {
+    return board.title
+      .replace(" ", "")
+      .toLocaleLowerCase()
+      .includes(search.toLocaleLowerCase().replace(" ", ""));
+  });
+
+  // 바뀌는 값 적용
   useEffect(() => {
     // console.log(data);
   }, [data]); // 바뀌는 값 적용
@@ -32,48 +57,40 @@ function Home() {
   return (
     <div>
       <div className="home_main">
-        <Searchbar />
+        <Searchbar search={search} onChange={onChange} />
         <div>
           <div className="board_title">게시판</div>
-          <div className="board_Add">글 작성</div>
+          <div className="board_Add" onClick={goToPostBoard}>
+            글 작성
+          </div>
         </div>
-        <br />
+
         <div>
-          <label>
-            페이지 당 표시할 게시물 수:&nbsp;
-            <select
-              type="number"
-              value={limit} // limit 제한
-              onChange={({ target: { value } }) => setLimit(Number(value))}
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="12">12</option>
-              <option value="20">20</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-            </select>
-          </label>
+          <LabelOption limit={limit} setLimit={setLimit} />
         </div>
-        <Table striped bordered hover className="board_read">
+
+        <table table className="table">
           <thead>
+            <tr className="first-tr">
+              <th colSpan="7"> board list</th>
+            </tr>
             <tr>
-              <th>#</th>
-              <th>title </th>
-              <th>내용 </th>
-              <th>cnt (조회수)</th>
+              <th colSpan="1">#</th>
+              <th colSpan="1">title </th>
+              <th colSpan="2">내용 </th>
+              <th colSpan="1">cnt (조회수)</th>
+              <th colSpan="1">작성자 </th>
+              <th colSpan="1"></th>
             </tr>
           </thead>
           <tbody>
-            {data?.boardAll
-              .slice(offset, offset + limit)
-              .map((board, index) => {
-                return (
-                  <TableComponent key={index} index={index} boardData={board} />
-                );
-              })}
+            {boardTitle.slice(offset, offset + limit).map((board, index) => {
+              return (
+                <TableComponent key={index} index={index} boardData={board} />
+              );
+            })}
           </tbody>
-        </Table>
+        </table>
 
         <Pagination
           total={data?.boardAll.length === undefined ? 1 : data.boardAll.length}

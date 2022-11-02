@@ -1,6 +1,7 @@
 import React from "react";
 import { HashRouter, Route, Routes, useParams } from "react-router-dom";
 import Navigation from "./components/Navigation";
+import PostBoard from "./components/PostBoard";
 import BoardDetail from "./pages/BoardDetail";
 import BoardSearch from "./pages/BoardSearch";
 import Home from "./pages/Home";
@@ -19,6 +20,7 @@ function Router(props) {
         <Route path="/" element={<Home />} />
         <Route path="/board/:id" element={<BoardDetail />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/baordpost" element={<PostBoard />} />
         <Route path="/test" element={<Test />} />
         <Route path="/test/:id" element={<TestId />} />
         <Route path="/board/search" element={<BoardSearch />} />

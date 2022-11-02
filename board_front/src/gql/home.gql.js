@@ -8,6 +8,8 @@ export const GET_BOARD = gql`
       contents
       createTime
       boardNum
+      userNum
+      fileNum
     }
   }
 `;
