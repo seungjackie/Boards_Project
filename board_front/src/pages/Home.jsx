@@ -8,11 +8,16 @@ import { GET_BOARD, POST_BOARD } from "../gql/home.gql";
 import { useParams } from "react-router-dom";
 import TableComponent from "../components/TableComponent";
 import Pagination from "../components/Pagination";
+import Searchbar from "../components/Searchbar";
 
 function Home() {
   const { loading, error, data } = useQuery(GET_BOARD);
+
+  // 5개의 게시물로 보여주겠다.
   const [limit, setLimit] = useState(5);
+  // 시작 페이지 1
   const [page, setPage] = useState(1);
+  // 페이지 -1에서 자르겟다.
   const offset = (page - 1) * limit;
 
   useEffect(() => {
@@ -22,9 +27,12 @@ function Home() {
   if (loading) return <Loading />;
   if (error) return <Error />;
 
+  // console.log(setLimit, "<<<<< >>>>>");
+
   return (
     <div>
       <div className="home_main">
+        <Searchbar />
         <div>
           <div className="board_title">게시판</div>
           <div className="board_Add">글 작성</div>
@@ -35,7 +43,7 @@ function Home() {
             페이지 당 표시할 게시물 수:&nbsp;
             <select
               type="number"
-              value={limit}
+              value={limit} // limit 제한
               onChange={({ target: { value } }) => setLimit(Number(value))}
             >
               <option value="5">5</option>

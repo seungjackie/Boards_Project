@@ -5,11 +5,6 @@ import Pagination from "./Pagination";
 
 const TableComponent = ({ boardData, key, index }) => {
   const naviate = useNavigate();
-  const [posts, setPosts] = useState([boardData]);
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(1);
-  const offset = (page - 1) * limit;
-
   const id = boardData?.uId_borad;
 
   const goToDetail = () => {
@@ -19,7 +14,6 @@ const TableComponent = ({ boardData, key, index }) => {
       },
     });
   };
-  console.log(boardData);
 
   return (
     <tr onClick={() => goToDetail()}>

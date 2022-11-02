@@ -10,7 +10,7 @@ type Department {
 type User {
   userNum: String!
   userId: String!
-  userPw: Int!
+  userPw: String!
   userName: String!
   deptCode: String!
 }
@@ -61,7 +61,7 @@ input CreateUserInput {
   userId: String!
 
   """유저 패스워드"""
-  userPw: Int!
+  userPw: String!
 
   """유저 이름"""
   userName: String!

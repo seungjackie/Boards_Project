@@ -18,6 +18,14 @@ const LOG_IN_QUERY = gql`
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [inputId, setInputId] = useState("");
+  const [inputPw, setInputPw] = useState("");
+  // const {data} = useQuery(USER_CHECK);
+  console.log("data>>>", data);
+
+  console.log("inputId", inputId);
+  console.log("inputPw", inputPw);
+  function userCheck() {}
 
   const { loading, error, data } = useQuery(GET_USER);
 
@@ -42,17 +50,25 @@ const Login = () => {
         loginClick(e);
       }}
     >
-      {/* Input box to input email */}
-      <input value={email} onChange={(event) => setEmail(event.target.value)} />
-      {/* Input box to input password */}
-      <input
-        value={password}
-        onChange={(event) => setPassword(event.target.value)}
-      />
-      {/* Button to log in */}
-      <button onClick={() => loginClick({ variables: { email, password } })}>
-        Log in
-      </button>
+      <form onSubmit={userCheck}>
+        <div>ID</div>
+        <input
+          type="id"
+          placeholder="아이디를 입력하세요"
+          value={inputId}
+          onChange={(e) => setInputId(e.target.value)}
+        />
+        <div>Password</div>
+        <input
+          type="password"
+          placeholder="비밀번호를 입력하세요"
+          value={inputPw}
+          onChange={(e) => setInputPw(e.target.value)}
+        />
+        <button variant="primary" type="submit">
+          LOGIN
+        </button>
+      </form>
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React from "react";
 import { HashRouter, Route, Routes, useParams } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import BoardDetail from "./pages/BoardDetail";
+import BoardSearch from "./pages/BoardSearch";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Test from "./pages/Test";
@@ -20,6 +21,7 @@ function Router(props) {
         <Route path="/login" element={<Login />} />
         <Route path="/test" element={<Test />} />
         <Route path="/test/:id" element={<TestId />} />
+        <Route path="/board/search" element={<BoardSearch />} />
       </Routes>
     </HashRouter>
   );

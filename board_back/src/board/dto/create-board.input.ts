@@ -5,6 +5,7 @@ export class CreateBoardInput {
   @Field(() => String, { description: '사번' })
   boardNum: string;
 
+  // length 정해주기 input 에서도 length 정해 주기
   @Field(() => String, { description: '타이틀 : ' })
   title: string;
 

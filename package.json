@@ -1,0 +1,25 @@
+{
+  "name": "boards",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "back": "cd board_back && npm run start:dev",
+    "front": "cd board_front && npm start",
+    "start": "concurrently \"npm run back\"  \"npm run front\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seungjackie/Boards_Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seungjackie/Boards_Project/issues"
+  },
+  "homepage": "https://github.com/seungjackie/Boards_Project#readme",
+  "dependencies": {
+    "concurrently": "^7.5.0"
+  },
+  "description": ""
+}

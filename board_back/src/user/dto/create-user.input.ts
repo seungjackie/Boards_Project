@@ -8,8 +8,8 @@ export class CreateUserInput {
   @Field(() => String, { description: '유저 Id' })
   userId: string;
 
-  @Field(() => Int, { description: '유저 패스워드' })
-  userPw: number;
+  @Field(() => String, { description: '유저 패스워드' })
+  userPw: string;
 
   @Field(() => String, { description: '유저 이름' })
   userName: string;

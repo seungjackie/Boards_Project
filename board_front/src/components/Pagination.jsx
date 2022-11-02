@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 function Pagination({ total, limit, page, setPage }) {
+  // 총 개수에서 limit 5개로 나누기
   const numPages = Math.ceil(total / limit);
 
   return (
