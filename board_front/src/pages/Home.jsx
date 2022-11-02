@@ -13,7 +13,7 @@ import LabelOption from "../components/LabelOption";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Home() {
-  const { loading, error, data } = useQuery(GET_BOARD);
+  const { loading, error, data } = useQuery(GET_BOARD); // 개수 제한 index
   const navigate = useNavigate();
 
   // 5개의 게시물로 보여주겠다.

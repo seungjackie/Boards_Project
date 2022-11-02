@@ -7,6 +7,7 @@ import { AuthenticationError, ForbiddenError } from 'apollo-server';
 import bcrypt from 'bcrypt';
 import sha256 from 'crypto-js/sha256';
 import rand from 'csprng';
+import { LoginInput } from './dto/user.login';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -23,9 +24,17 @@ export class UserResolver {
   }
 
   @Query(() => [User], { name: 'userOne' })
-  findOne(@Args('userNum', { type: () => String }) userNum: string) {
-    return this.userService.findOne(userNum);
+  findOne(@Args('userId', { type: () => String }) userId: string) {
+    return this.userService.findOne(userId);
   }
+
+  @Mutation(() => Boolean, { name: 'userCheck' })
+  login(@Args('loginInput') loginInput: LoginInput) {
+    return this.userService.login(loginInput);
+  }
+
+  // @Mutation(() => Boolean ,{ userId : "userIdChect"})
+  // login(@Args("loginInput") loginInput: LoginInput)
 
   //   @Query(() => User, { name: 'login'})
   // login:(_)

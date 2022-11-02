@@ -5,6 +5,9 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
 import { AuthGuard } from '@nestjs/passport';
+import { LoginInput } from './dto/user.login';
+import { ApolloError } from 'apollo-server-express';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -19,20 +22,6 @@ export class UserService {
     });
   }
 
-  // async getById(userId: string) {
-  //   const user = await this.userRepository.findOne({ userId });
-  //   if (user) {
-  //     return user;
-  //   }
-  //   throw new HttpException(
-  //     '사용자 id가 존재 하지 않습니다.',
-  //     HttpStatus.NOT_FOUND,
-  //   );
-  // }
-
-  // 서비스
-  // 리턴을 아웃풋으로 받게
-
   findAll() {
     return this.userRepository.find();
   }
@@ -40,4 +29,19 @@ export class UserService {
   findOne(id: string) {
     return this.userRepository[0].findOne(id);
   }
+
+  // input 에 createUserInput 추가
+  async login({ LoginInputId, LoginInputPw }: LoginInput) {
+    const user = await this.userRepository.findOne({ userId: LoginInputId });
+    console.log(user)
+      if (!user) false;
+      else user.userPw === LoginInputPw;
+      return false;
+    }
+    // return user
+  }
+
+  // 서비스
+  // 리턴을 아웃풋으로 받게
+
 }

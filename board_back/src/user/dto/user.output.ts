@@ -1,1 +1,9 @@
-// 클라이언트에서 보여줄 정보
+import { ObjectType, Int, Field } from '@nestjs/graphql';
+
+@ObjectType()
+export class MutationOutput {
+  @Field(() => String, { nullable: true })
+  error?: string;
+  @Field(() => Boolean)
+  ok: boolean;
+}
