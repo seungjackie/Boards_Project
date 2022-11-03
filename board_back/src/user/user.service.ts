@@ -32,16 +32,18 @@ export class UserService {
 
   // input 에 createUserInput 추가
   async login({ LoginInputId, LoginInputPw }: LoginInput) {
-    const user = await this.userRepository.findOne({ userId: LoginInputId });
-    console.log(user)
-      if (!user) false;
-      else user.userPw === LoginInputPw;
+    const user = await this.userRepository.findOne({
+      where: { userId: LoginInputId },
+    });
+    console.log(user);
+    if (!user) {
+      console.log('존재하지 않는 ID입니다. ->  ', LoginInputId);
       return false;
+    } else {
+      console.log('user.userPw ->  ', user.userPw);
+      console.log(user.userId);
+      console.log(user.userPw === LoginInputPw);
+      return user.userPw === LoginInputPw;
     }
-    // return user
   }
-
-  // 서비스
-  // 리턴을 아웃풋으로 받게
-
 }

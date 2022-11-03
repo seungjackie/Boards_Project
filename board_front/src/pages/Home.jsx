@@ -26,6 +26,7 @@ function Home() {
   // 검색
   const [search, setSearch] = useState("");
 
+  // 검색 함수
   const onChange = (e) => {
     setSearch(e.target.value);
   };
@@ -46,8 +47,10 @@ function Home() {
 
   // 바뀌는 값 적용
   useEffect(() => {
-    // console.log(data);
-  }, [data]); // 바뀌는 값 적용
+    if (loading) {
+      console.log(data);
+    }
+  }, [data, loading]); // 바뀌는 값 적용
 
   if (loading) return <Loading />;
   if (error) return <Error />;
@@ -57,18 +60,20 @@ function Home() {
   return (
     <div>
       <div className="home_main">
-        <Searchbar search={search} onChange={onChange} />
         <div>
           <div className="board_title">게시판</div>
+        </div>
+        <div className="board_second_container">
           <div className="board_Add" onClick={goToPostBoard}>
             글 작성
           </div>
+          <div className="search_main">
+            <Searchbar search={search} onChange={onChange} />
+          </div>
         </div>
-
-        <div>
+        <div className="labeloption_contaiiner">
           <LabelOption limit={limit} setLimit={setLimit} />
         </div>
-
         <table table className="table">
           <thead>
             <tr className="first-tr">

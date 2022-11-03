@@ -6,6 +6,8 @@ import { gql, useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { GET_BOARD, GET_USER } from "../gql/home.gql";
 import Error from "../components/Error";
 import Loading from "../components/Loading";
+import { useNavigate } from "react-router-dom";
+import { USER_CHECK } from "../gql/user.gql";
 
 const LOG_IN_QUERY = gql`
   query Login($userId: String!, $password: int!) {
@@ -16,40 +18,29 @@ const LOG_IN_QUERY = gql`
 `;
 
 const Login = () => {
-  const [id, setId] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
-  // const {data} = useQuery(USER_CHECK);
 
   // console.log("inputId", inputId);
   // console.log("inputPw", inputPw);
-  const userCheck = () => {
-    console.log(inputId, inputPw);
-  };
 
-  const { loading, error, data } = useQuery(GET_USER);
+  const [login] = useMutation(USER_CHECK, {
+    variables: { LoginInputId: inputId, LoginInputPw: inputPw },
+  });
 
-  if (loading) return <Loading />;
-  if (error) return <Error />;
-
-  // console.log(data);
-
-  const filterId = data.userAll.find((user) => user.userId === "qkrtmdwo");
-  // console.log(filterId);
-
-  const loginClick = () => {
-    console.log();
+  const userCheck = async () => {
+    const loginAuth = await login();
+    console.log(loginAuth, "<<< 데이터 확이");
+    console.log("input ID :" + inputId, "input PW : " + inputPw);
+    console.log("login auth :" + loginAuth.data.userCheck);
+    if( !loginAuth.data.userCheck)
+    navigate("/");
   };
 
   return (
-    <div
-      className="Login_main"
-      onSubmit={(e) => {
-        loginClick(e);
-      }}
-    >
-      <form onSubmit={userCheck}>
+    <div className="Login_main">
+      <form>
         <div>ID</div>
         <input
           type="id"
@@ -64,7 +55,7 @@ const Login = () => {
           value={inputPw}
           onChange={(e) => setInputPw(e.target.value)}
         />
-        <button variant="primary" type="submit">
+        <button variant="primary" type="submit" onClick={userCheck}>
           LOGIN
         </button>
       </form>

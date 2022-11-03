@@ -1,7 +1,5 @@
 import { ArgsType, Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 import { Column } from 'typeorm';
-import { User } from '../entities/user.entity';
-import { MutationOutput } from './user.output';
 
 @InputType()
 // type 통일성

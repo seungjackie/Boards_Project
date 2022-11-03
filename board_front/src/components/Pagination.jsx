@@ -42,7 +42,7 @@ const Button = styled.button`
   border-radius: 8px;
   padding: 8px;
   margin: 0;
-  background: black;
+  background: green;
   color: white;
   font-size: 1rem;
 
@@ -52,6 +52,7 @@ const Button = styled.button`
     transform: translateY(-2px);
   }
 
+  // 페이지가 못 넘어 갈시
   &[disabled] {
     background: grey;
     cursor: revert;

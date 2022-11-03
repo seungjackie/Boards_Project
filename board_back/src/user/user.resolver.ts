@@ -30,6 +30,7 @@ export class UserResolver {
 
   @Mutation(() => Boolean, { name: 'userCheck' })
   login(@Args('loginInput') loginInput: LoginInput) {
+    // LoginInput으로 데이터 확인
     return this.userService.login(loginInput);
   }
 

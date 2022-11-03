@@ -1,10 +1,19 @@
-.home_main {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+.body {
+  background-color: #a02525;
+  color: white;
+}
+
+.searchBar {
+  width: 200px;
+  margin: 20px auto;
   text-align: center;
-  align-items: center;
-  border: 1px solid black;
+  /* 복수 요소 */
+  /* display: inline-block; */
+}
+/* 홈페이지 2번째 컨테이너  */
+.board_second_container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .board_Add {
@@ -13,11 +22,37 @@
   /* color: green; */
   border: 1px solid green;
   background-color: blue;
+  text-align: center;
   color: white;
   margin-left: 50px;
-  margin-top: 10%;
+  margin-top: 40px;
+  justify-items: start;
 }
 
+.search_main {
+  /* display: flex; */
+  /* 상하 가운데 */
+  align-items: center;
+  margin-top: 20px;
+  grid-column-end: 1fr;
+  justify-content: end;
+  float: inline-end;
+  margin-left: 40px;
+}
+
+.home_main {
+  width: 100%;
+  /* display: flex; */
+  flex-wrap: wrap;
+  /* text-align: center; */
+  /* align-items: center; */
+  border: 1px solid black;
+}
+
+.labeloption_contaiiner {
+  margin-top: 20px;
+  margin-left: 50px;
+}
 .Home_Table_Main {
   width: 90%;
   /* background-color: black; */
@@ -34,15 +69,16 @@
 
 .board_title {
   /* position: relative; */
-  /* margin-left: auto; */
-  /* margin-right: auto; */
-  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  /* display: flex; */
   width: 400px;
   /* display: flex; */
-  flex-direction: column;
+  /* flex-direction: column; */
   margin-left: 100px;
   margin-right: auto;
   justify-content: center;
+  text-align: center;
   margin-top: 10%;
   padding: 10px 8px 10px 6px;
   background-color: white;
@@ -69,7 +105,8 @@ body {
   border-spacing: 0;
   border: 2px solid black;
   width: 90%;
-  margin: 50px auto;
+  margin-left: 50px;
+  margin-right: 50px;
   border-radius: 0.25rem;
 }
 

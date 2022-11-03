@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
-const DetailBoard = () => {
+const BoardDetail = () => {
   const location = useLocation();
   //   console.log(state, "<<< state");
   let { id } = useParams();
@@ -35,4 +35,4 @@ const DetailBoard = () => {
   );
 };
 
-export default DetailBoard;
+export default BoardDetail;
