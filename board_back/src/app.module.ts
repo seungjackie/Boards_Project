@@ -7,7 +7,7 @@ import { AppService } from './app.service';
 import { DepartmentModule } from './department/department.module';
 import { UserModule } from './user/user.module';
 import { typeORMConfig } from './config/typeorm.config';
-import { FileModule } from './file/file.module';
+// import { FileModule } from './file/file.module';
 import { BoardModule } from './board/board.module';
 
 @Module({
@@ -20,7 +20,7 @@ import { BoardModule } from './board/board.module';
     }),
     TypeOrmModule.forRoot(typeORMConfig),
     DepartmentModule,
-    FileModule,
+    // FileModule,
     BoardModule,
   ],
 

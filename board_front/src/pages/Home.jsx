@@ -4,7 +4,7 @@ import "./Home.css";
 import { gql, useQuery } from "@apollo/client";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
-import { GET_BOARD, POST_BOARD } from "../gql/home.gql";
+import { BOARD_GET } from "../gql/board.gql";
 import { useNavigate, useParams } from "react-router-dom";
 import TableComponent from "../components/TableComponent";
 import Pagination from "../components/Pagination";
@@ -13,7 +13,7 @@ import LabelOption from "../components/LabelOption";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Home() {
-  const { loading, error, data } = useQuery(GET_BOARD); // 개수 제한 index
+  const { loading, error, data } = useQuery(BOARD_GET); // 개수 제한 index
   const navigate = useNavigate();
 
   // 5개의 게시물로 보여주겠다.
@@ -33,16 +33,18 @@ function Home() {
 
   // 글작성 이동
   const goToPostBoard = () => {
-    console.log("hhh");
     navigate("/baordpost");
   };
 
   // title 검색
   const boardTitle = data?.boardAll.filter((board) => {
-    return board.title
-      .replace(" ", "")
-      .toLocaleLowerCase()
-      .includes(search.toLocaleLowerCase().replace(" ", ""));
+    return (
+      board.title
+        .replace(" ", "") // 타이틀 띄어쓰기 방지.
+        .toLocaleLowerCase() // 대 소문자 상관 없이 검샘 가능
+        // state 값으로 찾기.
+        .includes(search.toLocaleLowerCase().replace(" ", ""))
+    );
   });
 
   // 바뀌는 값 적용
@@ -50,7 +52,7 @@ function Home() {
     if (loading) {
       console.log(data);
     }
-  }, [data, loading]); // 바뀌는 값 적용
+  }, [data, loading, setLimit]); // 바뀌는 값 적용
 
   if (loading) return <Loading />;
   if (error) return <Error />;
@@ -74,26 +76,30 @@ function Home() {
         <div className="labeloption_contaiiner">
           <LabelOption limit={limit} setLimit={setLimit} />
         </div>
-        <table table className="table">
+        <table className="table">
           <thead>
             <tr className="first-tr">
               <th colSpan="7"> board list</th>
             </tr>
             <tr>
               <th colSpan="1">#</th>
-              <th colSpan="1">title </th>
-              <th colSpan="2">내용 </th>
-              <th colSpan="1">cnt (조회수)</th>
-              <th colSpan="1">작성자 </th>
+              <th colSpan="1">title</th>
+              <th colSpan="1">작성자</th>
+              <th colSpan="2">작성일</th>
+              <th colSpan="1">조회수</th>
               <th colSpan="1"></th>
             </tr>
           </thead>
           <tbody>
-            {boardTitle.slice(offset, offset + limit).map((board, index) => {
-              return (
-                <TableComponent key={index} index={index} boardData={board} />
-              );
-            })}
+            {/*todo */}
+            {boardTitle
+              .slice(offset, offset + limit)
+              .sort((a, b) => b - a)
+              .map((board, index) => {
+                return (
+                  <TableComponent key={index} index={index} boardData={board} />
+                );
+              })}
           </tbody>
         </table>
 

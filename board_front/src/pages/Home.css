@@ -32,12 +32,15 @@
 .search_main {
   /* display: flex; */
   /* 상하 가운데 */
+  display: grid;
   align-items: center;
   margin-top: 20px;
   grid-column-end: 1fr;
   justify-content: end;
   float: inline-end;
   margin-left: 40px;
+  float: right;
+  margin: auto;
 }
 
 .home_main {
@@ -46,7 +49,6 @@
   flex-wrap: wrap;
   /* text-align: center; */
   /* align-items: center; */
-  border: 1px solid black;
 }
 
 .labeloption_contaiiner {
@@ -68,18 +70,13 @@
 }
 
 .board_title {
-  /* position: relative; */
   margin-left: auto;
   margin-right: auto;
-  /* display: flex; */
   width: 400px;
-  /* display: flex; */
-  /* flex-direction: column; */
-  margin-left: 100px;
-  margin-right: auto;
   justify-content: center;
   text-align: center;
-  margin-top: 10%;
+  margin-top: 3%;
+  margin-bottom: 2%;
   padding: 10px 8px 10px 6px;
   background-color: white;
   background-color: blanchedalmond;

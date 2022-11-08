@@ -33,10 +33,4 @@ export class UserResolver {
     // LoginInput으로 데이터 확인
     return this.userService.login(loginInput);
   }
-
-  // @Mutation(() => Boolean ,{ userId : "userIdChect"})
-  // login(@Args("loginInput") loginInput: LoginInput)
-
-  //   @Query(() => User, { name: 'login'})
-  // login:(_)
 }

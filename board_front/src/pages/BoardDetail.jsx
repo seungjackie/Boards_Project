@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import "./BoardDetail.css"
+import "./BoardDetail.css";
 
 const BoardDetail = () => {
   const location = useLocation();
   //   console.log(state, "<<< state");
   let { id } = useParams();
   console.log(id, "<<<<< id");
+
+  // todo 필요한 데이터만 가져오기.
 
   const state = location?.state;
   const boardData = state?.data;
@@ -16,7 +18,7 @@ const BoardDetail = () => {
     <div className="DetailMain">
       <div className="container1">
         <div className="div1">작성일</div>
-        <div className="div2">{boardData.createTime}</div>
+        <div className="div2">{boardData.createTime.slice(0, -14)}</div>
         <div className="div3">작성자</div>
         <div className="div4">박승재 / 신성장 기술팀</div>
       </div>

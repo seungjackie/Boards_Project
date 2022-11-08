@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client";
 
 // 유저 전체 목록 조회
+// 테스트 데이터
 export const USER_ALL = gql`
   query UserAll {
     userAll {

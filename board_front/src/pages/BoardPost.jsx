@@ -10,6 +10,9 @@ const BoardPost = () => {
   const [inputUserNum, setInputUserNum] = useState("");
   const [inputFileNum, setInputFileNum] = useState("");
 
+  let now = new Date();
+  console.log(now);
+
   const [BoardAdd] = useMutation(BOARD_ADD, {
     variables: {
       title: inputBoardTitle,
@@ -32,7 +35,7 @@ const BoardPost = () => {
 
       <div className="container1">
         <div className="div1">작성일</div>
-        <div className="div2"></div>
+        <div className="div2">{now.toLocaleDateString("ko-kr")}</div>
         <div className="div3">작성자</div>
         <div className="div4">박승재 / 신성장 기술팀</div>
       </div>

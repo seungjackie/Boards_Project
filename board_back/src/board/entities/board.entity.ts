@@ -12,9 +12,9 @@ import {
 @Entity()
 @ObjectType()
 export class Board {
-  @PrimaryColumn({ type: 'varchar', length: '7' })
-  @Field(() => String)
-  boardNum: string;
+  @PrimaryGeneratedColumn()
+  @Field()
+  boardNum: number;
 
   @Column({ type: 'varchar', length: '255' })
   @Field(() => String)
@@ -24,7 +24,7 @@ export class Board {
   @Field(() => String)
   contents: string;
 
-  @Column({ type: 'int', default: '0' })
+  @Column({ type: 'int', default: 0 })
   @Field()
   cnt: number;
 
@@ -35,14 +35,4 @@ export class Board {
   @Column({ type: 'varchar', length: '255' })
   @Field(() => String)
   userNum: string;
-
-  @Column({ type: 'varchar', length: '255', nullable: true })
-  @Field(() => String)
-  fileNum: string;
-
-  // !todo 작성자
-  // userName
-
-  // !todo 파일
-  // deptName
 }

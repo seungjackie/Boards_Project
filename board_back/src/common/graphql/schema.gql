@@ -15,19 +15,13 @@ type User {
   deptCode: String!
 }
 
-type File {
-  fileNum: String!
-  fileName: String!
-}
-
 type Board {
-  boardNum: String!
+  boardNum: Float!
   title: String!
   contents: String!
   cnt: Float!
   createTime: DateTime!
   userNum: String!
-  fileNum: String!
 }
 
 """
@@ -40,17 +34,20 @@ type Query {
   userOne(userId: String!): [User!]!
   departmentAll: [Department!]!
   departmentOne(deptCode: String!): Department!
-  fileAll: [File!]!
-  fileOne(fileNum: Int!): File!
-  boardAll: [Board!]!
   boardOne(boardNum: String!): Board!
+  count: Float!
+  boards(boards: BoardAllInput!): Board!
+}
+
+input BoardAllInput {
+  skip: Int!
+  take: Int!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   userCheck(loginInput: LoginInput!): Boolean!
   createDepartment(createDepartmentInput: CreateDepartmentInput!): Department!
-  createFile(createFileInput: CreateFileInput!): File!
   createBoard(createBoardInput: CreateBoardInput!): Board!
 }
 
@@ -84,18 +81,7 @@ input CreateDepartmentInput {
   deptName: String!
 }
 
-input CreateFileInput {
-  """사번"""
-  fileNum: String!
-
-  """FILE 이름"""
-  fileName: String!
-}
-
 input CreateBoardInput {
-  """사번"""
-  boardNum: String!
-
   """타이틀 : """
   title: String!
 
@@ -104,7 +90,4 @@ input CreateBoardInput {
 
   """ 본문 내용"""
   userNum: String!
-
-  """ 본문 내용"""
-  fileNum: String!
 }

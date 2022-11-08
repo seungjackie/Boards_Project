@@ -40,7 +40,7 @@ export class UserService {
       console.log('존재하지 않는 ID입니다. ->  ', LoginInputId);
       return false;
     } else {
-      console.log('user.userPw ->  ', user.userPw);
+      console.log('user.userPw  ->  ', user.userPw);
       console.log(user.userId);
       console.log(user.userPw === LoginInputPw);
       return user.userPw === LoginInputPw;

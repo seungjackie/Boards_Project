@@ -1,36 +1,11 @@
 import gql from "graphql-tag";
 
-// export const BOARD_ADD = gql`
-
-// mutation{
-//     createBoard(createBoardInput:{
-//         $title: String!,
-//         $contents: String!,
-//         $boardNum: String!,
-//         $userNum: String!,
-//         $fileNum: String!
-//         ){
-//         createBoardInput:{
-//             title: $inputBoardTitle
-//             contents: $inputBoardContents
-//             boardNum: $inputBoardNum
-//             userNum: $inputUserNum
-//             fileNum: $inputFileNum
-//     }){
-//     cnt,contents,createTime,boardNum,userNum
-//     title,fileNum
-//   }
-//     })
-//   }
-// `;
-
 export const BOARD_ADD = gql`
   mutation boardAdd(
     $title: String!
     $contents: String!
     $userNum: String!
     $boardNum: String!
-    $userNum: String!
     $fileNum: String!
   ) {
     createBoard(
@@ -38,17 +13,60 @@ export const BOARD_ADD = gql`
         title: $title
         contents: $contents
         userNum: $userNum
-        boardNum: $inputBoardNum
-        fileNum: $inputFileNum
+        boardNum: $boardNum
+        fileNum: $fileNum
       }
     ) {
       boardNum
       title
       contents
       userNum
-      date
       cnt
       fileNum
     }
   }
 `;
+
+// export const BOARD_ALL_TEST = gql`
+//   query
+// `
+
+export const BOARD_GET = gql`
+  query boardAll {
+    boardAll {
+      title
+      cnt
+      createTime
+      userNum
+    }
+  }
+`;
+
+export const BOARD_EDIT = gql`
+  mutation EditCustomer($title: String!, $contents: String!) {
+    editBoard(title: $title, contents: $contents) {
+      title
+      contents
+    }
+  }
+`;
+
+export const FEED_QUERY = gql`
+  query boardAll (offset: $offset, limit: $limit){
+    boardAll {
+      title
+      cnt
+      createTime
+      userNum
+    }
+  }
+`;
+
+//   query Feed($offset: Int, $limit: Int) {
+//     boardAll(offset: $offset, limit: $limit) {
+//       title
+//       cnt
+//       createTime
+//       userNum
+//     }
+//   }

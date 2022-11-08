@@ -3,21 +3,12 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "./Login.css";
 import { gql, useMutation, useQuery, useLazyQuery } from "@apollo/client";
-import { GET_BOARD, GET_USER } from "../gql/home.gql";
 import Error from "../components/Error";
 import Loading from "../components/Loading";
 import { useNavigate } from "react-router-dom";
 import { USER_CHECK } from "../gql/user.gql";
 
-const LOG_IN_QUERY = gql`
-  query Login($userId: String!, $password: int!) {
-    user(userId: $userId, password: $password) {
-      jwt
-    }
-  }
-`;
-
-const Login = () => {
+const Login = ({ auth }) => {
   const navigate = useNavigate();
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
@@ -31,11 +22,13 @@ const Login = () => {
 
   const userCheck = async () => {
     const loginAuth = await login();
-    console.log(loginAuth, "<<< 데이터 확이");
+    console.log(loginAuth, "<<< 데이터 확인");
     console.log("input ID :" + inputId, "input PW : " + inputPw);
     console.log("login auth :" + loginAuth.data.userCheck);
-    if( !loginAuth.data.userCheck)
-    navigate("/");
+    if (loginAuth.data.userCheck) {
+      auth(true);
+      navigate("/");
+    } else alert("아이디와 비밀번호를 다시 입력하세요.");
   };
 
   return (

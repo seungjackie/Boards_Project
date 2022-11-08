@@ -29,6 +29,8 @@ function Pagination({ total, limit, page, setPage }) {
   );
 }
 
+export default Pagination;
+
 const Nav = styled.nav`
   display: flex;
   justify-content: center;
@@ -66,5 +68,3 @@ const Button = styled.button`
     transform: revert;
   }
 `;
-
-export default Pagination;
