@@ -11,7 +11,4 @@ export class CreateBoardInput {
 
   @Field(() => String, { description: ' 본문 내용' })
   userNum: string;
-
-  // @Field(() => String, { description: ' 본문 내용' })
-  // fileNum: string;
 }

@@ -34,9 +34,10 @@ type Query {
   userOne(userId: String!): [User!]!
   departmentAll: [Department!]!
   departmentOne(deptCode: String!): Department!
-  boardOne(boardNum: String!): Board!
+  boardAll: [Board!]!
   count: Float!
   boards(boards: BoardAllInput!): Board!
+  boardOne(boardOneInput: BoardOneInput!): Board!
 }
 
 input BoardAllInput {
@@ -44,11 +45,16 @@ input BoardAllInput {
   take: Int!
 }
 
+input BoardOneInput {
+  boardSetNum: Int
+}
+
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   userCheck(loginInput: LoginInput!): Boolean!
   createDepartment(createDepartmentInput: CreateDepartmentInput!): Department!
   createBoard(createBoardInput: CreateBoardInput!): Board!
+  updateBoard(input: UpdateBoardDto!): Boolean!
 }
 
 input CreateUserInput {
@@ -90,4 +96,20 @@ input CreateBoardInput {
 
   """ 본문 내용"""
   userNum: String!
+}
+
+input UpdateBoardDto {
+  boardNum: Int!
+  data: UpdateBoardInputType!
+}
+
+input UpdateBoardInputType {
+  """타이틀 : """
+  title: String
+
+  """ 본문 내용"""
+  contents: String
+
+  """ 본문 내용"""
+  userNum: String
 }

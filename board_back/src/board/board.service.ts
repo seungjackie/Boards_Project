@@ -3,9 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateBoardInput } from './dto/create-board.input';
 import { Board } from './entities/board.entity';
-import { UpdateBoardInput } from './dto/board.update';
 import { BoardAllInput } from './dto/board-all.input';
-import { BoardAllOutput } from './dto/board.output';
+import { BoardAllInter } from './dto/board.inter';
+import { UpdateBoardDto } from './dto/board-update';
+import { BoardOneInput } from './dto/board-one.input';
+// import { BoardOneInputType } from './dto/board-one.input';
 
 @Injectable()
 export class BoardService {
@@ -20,12 +22,8 @@ export class BoardService {
     });
   }
 
-  // findAll() {
-  //   return this.boardRepository.find();
-  // }
-
-  findOne(id: string) {
-    return this.boardRepository[0].findOne(id);
+  findAll() {
+    return this.boardRepository.find();
   }
 
   // promise는 aync await을 사용하면 사라진다.
@@ -35,33 +33,68 @@ export class BoardService {
     return count;
   }
 
-  async findAllBoard(
+  async findAllBoard_service(
     // 스킵 or take 지정해주기
     //  skip을 여기서 정해줘도 똑같다.
     args: BoardAllInput = { skip: 0, take: 5 }, // skip이랑 왜 take랑 정해주는지
-  ): Promise<BoardAllOutput> {
+  ) /* : Promise<BoardAllOutput> */ {
+    // board oupt으로 사용하기 위해서 타입을 결정.
     const boards = await this.boardRepository.findAndCount({
       skip: args.skip,
       take: args.take,
     });
-    // console.log(boards); // 스킵 + limit 숫자를 통해 데이터 량 표시
 
     if (boards) {
       console.log(boards);
+      // return name;
       return;
     } else {
-      console.log('error');
+      console.log('boards Skip/ Take error');
     }
+
+    // console.log(boards); // 스킵 + limit 숫자를 통해 데이터 량 표시
+
+    // return boards.map((item, index) => {
+    //   return { item, index };
+    // });
+
+    // const name = boards!;
   }
 
-  // async find1() {
-  //   const findNmae = await this.boardRepository.findOne({
+  updateBoard({ boardNum, data }: UpdateBoardDto) {
+    return this.boardRepository.update(boardNum, { ...data });
+  }
+
+  // async findOne({ boardSetNum }: BoardOneInput) {
+  //   const boardOne = await this.boardRepository.findOne({
+  //     where: { boardNum: boardSetNum },
+  //   });
+  //   return boardOne;
+  // }
+
+  async findOne({ boardSetNum }: BoardOneInput) {
+    const boardOne = await this.boardRepository.findOne({
+      where: { boardNum: boardSetNum },
+    });
+    return boardOne;
+  }
+
+  // findOneBoard({ boardFindOneNum }: BoardOneInputType) {
+  //   console.log(boardFindOneNum, '<<<<<');
+  //   return this.boardRepository.findOne({
   //     where: {
-  //       title: '밤맛',
-  //       contents: '',
+  //       boardNum: boardFindOneNum,
   //     },
   //   });
-  //   return;
+  // }
+
+  // findOneBoard({ boardFindOneNum }: BoardOneInputType) {
+  //   console.log(boardFindOneNum, ' <<<<<<<<<<<<<<< ');
+  //   return this.boardRepository.findOne({
+  //     where: {
+  //       boardNum: boardFindOneNum,
+  //     },
+  //   });
   // }
 
   // async getAllBoards({ offset, limit }: BoardAllInput) {
@@ -84,7 +117,7 @@ export class BoardService {
   //   return { boardReqData, count };
   // }
   // async getAllPosts(offset?: number, limit?: number, startId?: number) {
-  //   const where: FindManyOptions<Board>['where'] = {};
+  //   const : FindManyOptions<Board>[''] = {};
   //   let separateCount = 0;
   //   if (startId) {
   //     where.id = MoreThan(startId);

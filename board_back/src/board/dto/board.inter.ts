@@ -4,7 +4,7 @@ import { BoardAllCount } from './board-all.count.input';
 import { BoardAllInput } from './board-all.input';
 
 @InputType()
-export class BoardAllOutput extends IntersectionType(
+export class BoardAllInter extends IntersectionType(
   BoardAllCount,
   BoardAllInput,
 ) {}

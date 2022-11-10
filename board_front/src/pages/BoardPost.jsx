@@ -8,7 +8,6 @@ const BoardPost = () => {
   const [inputBoardContents, setInputBoardContents] = useState("");
   const [inputBoardNum, setInputBoardNum] = useState("");
   const [inputUserNum, setInputUserNum] = useState("");
-  const [inputFileNum, setInputFileNum] = useState("");
 
   let now = new Date();
   console.log(now);
@@ -19,7 +18,6 @@ const BoardPost = () => {
       contents: inputBoardContents,
       boardNum: inputBoardNum,
       userNum: inputUserNum,
-      fileNum: inputFileNum,
     },
   });
 
@@ -56,27 +54,6 @@ const BoardPost = () => {
             onChange={(e) => setInputBoardContents(e.target.value)}
           />
         </div>
-      </div>
-      <div>
-        보드 넘:
-        <input
-          value={inputBoardNum}
-          onChange={(e) => setInputBoardNum(e.target.value)}
-        />
-      </div>
-      <div>
-        user num:
-        <input
-          value={inputUserNum}
-          onChange={(e) => setInputUserNum(e.target.value)}
-        />
-      </div>
-      <div>
-        file Num:
-        <input
-          value={inputFileNum}
-          onChange={(e) => setInputFileNum(e.target.value)}
-        />
       </div>
 
       <button onClick={AddButton}>등록</button>

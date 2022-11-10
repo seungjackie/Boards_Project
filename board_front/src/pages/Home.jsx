@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function Home() {
   const { loading, error, data } = useQuery(BOARD_GET); // 개수 제한 index
   const navigate = useNavigate();
+  console.log(data);
 
   // 5개의 게시물로 보여주겠다.
   const [limit, setLimit] = useState(5);

@@ -27,10 +27,6 @@ export const BOARD_ADD = gql`
   }
 `;
 
-// export const BOARD_ALL_TEST = gql`
-//   query
-// `
-
 export const BOARD_GET = gql`
   query boardAll {
     boardAll {
@@ -38,35 +34,63 @@ export const BOARD_GET = gql`
       cnt
       createTime
       userNum
+      boardNum
+    }
+  }
+`;
+
+export const BOARD_GET_ONE = gql`
+  query boardOneCheck($boardFindOneNum: Int!) {
+    boardFindOneInput(input: { boardFindOneNum: $boardFindOneNum }) {
+      title
+      contents
+      boardNum
+      userNum
+      createTime
+    }
+  }
+`;
+
+// export const BOARD_GET_ONE_TEST = gql`
+//   query checkboard($boardFindOneNum: Int!) {
+//     findtest(findtest: { boardFindOneNum: $boardFindOneNum }) {
+//       boardNum
+//       title
+//     }
+//   }
+// `;
+
+export const BOARD_GET_ONE_TEST = gql`
+  query checkboard($boardFindOneNum: Int) {
+    findtest(findtest: { boardFindOneNum: $boardFindOneNum }) {
+      boardNum
+      title
     }
   }
 `;
 
 export const BOARD_EDIT = gql`
-  mutation EditCustomer($title: String!, $contents: String!) {
-    editBoard(title: $title, contents: $contents) {
+  mutation check($boardNum: Int!, $title: String!, $contents: String!) {
+    updateBoard(
+      input: {
+        boardNum: $boardNum
+        data: { title: $title, contents: $contents }
+      }
+    )
+  }
+`;
+
+// test
+export const BOARD_ONE = gql`
+  query boardOne($boardSetNum: Int) {
+    boardOne(boardOneInput: { boardSetNum: $boardSetNum }) {
+      boardNum
       title
       contents
-    }
-  }
-`;
-
-export const FEED_QUERY = gql`
-  query boardAll (offset: $offset, limit: $limit){
-    boardAll {
-      title
-      cnt
-      createTime
       userNum
+      date
+      cnt
+      fileNum
     }
   }
 `;
-
-//   query Feed($offset: Int, $limit: Int) {
-//     boardAll(offset: $offset, limit: $limit) {
-//       title
-//       cnt
-//       createTime
-//       userNum
-//     }
-//   }

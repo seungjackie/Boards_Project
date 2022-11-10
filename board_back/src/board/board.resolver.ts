@@ -1,10 +1,19 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Int,
+  ArgsType,
+} from '@nestjs/graphql';
 import { BoardService } from './board.service';
 import { Board } from './entities/board.entity';
 import { CreateBoardInput } from './dto/create-board.input';
-import { UpdateBoardInput } from './dto/update-board.input';
 import { BoardAllInput } from './dto/board-all.input';
-import { BoardAllOutput } from './dto/board.output';
+import { BoardAllInter } from './dto/board.inter';
+import { UpdateBoardDto } from './dto/board-update';
+import { RuleTester } from 'eslint';
+import { BoardOneInput } from './dto/board-one.input';
 
 @Resolver(() => Board)
 export class BoardResolver {
@@ -15,14 +24,9 @@ export class BoardResolver {
     return this.boardService.create(createBoardInput);
   }
 
-  // @Query(() => [Board], { name: 'boardAll' })
-  // findAll() {
-  //   return this.boardService.findAll();
-  // }
-
-  @Query(() => Board, { name: 'boardOne' })
-  findOne(@Args('boardNum', { type: () => String }) boardNum: string) {
-    return this.boardService.findOne(boardNum);
+  @Query(() => [Board], { name: 'boardAll' })
+  findAll() {
+    return this.boardService.findAll();
   }
 
   @Query(() => Number, { name: 'count' })
@@ -30,16 +34,81 @@ export class BoardResolver {
     return this.boardService.getCount();
   }
 
+  @Query(() => Board, { name: 'boards' })
+  async findAllBoard_resolver(@Args('boards') boarAllInput: BoardAllInput) {
+    return this.boardService.findAllBoard_service(boarAllInput);
+  }
+
+  @Mutation((returns) => Boolean)
+  async updateBoard(
+    @Args('input') updateBoardDto: UpdateBoardDto,
+  ): Promise<boolean> {
+    try {
+      await this.boardService.updateBoard(updateBoardDto);
+      return true;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  }
+
+  // @Query(() => Number, { name: 'boardOne' })
+  // async findOne(
+  //   @Args('input') boardOneInputType: BoardOneInputType,
+  // ): Promise<number> {
+  //   try {
+  //     await this.boardService.findOne(boardOneInputType);
+  //     return true;
+  //   } catch (e) {
+  //     console.log(e);
+  //     return false;
+  //   }
+  // }
+
+  // @Query(() => Board, { name: 'boardOne' })
+  // findOne(@Args('boardOneInput') boardOneInput: BoardOneInput) {
+  //   return this.boardService.findOne(boardOneInput);
+  // }
+
+  // todo
+  @Query(() => Board, { name: 'boardOne' })
+  findOne(@Args('boardOneInput') boardOneInput: BoardOneInput) {
+    return this.boardService.findOne(boardOneInput);
+  }
+
+  // @Query((type) => [Board], { name: 'findOne' })
+  // findBoardOneTest(
+  //   @Args('boardOneInput') boardOneInputType: BoardOneInputType,
+  // ) {
+  //   console.log(this.boardService.findOneBoard(boardOneInputType));
+  //   return this.boardService.findOneBoard(boardOneInputType);
+  // }
+
+  // @Query(() => Number, { name: 'boardFindOneInput' })
+  // async findOne(
+  //   @Args('input') boardOneInput: BoardOneInputType,
+  // ): Promise<Board> {
+  //   // console.log(boardOneInput)
+  //   try {
+  //     return await this.boardService.findOneBoard(boardOneInput);
+  //   } catch (e) {
+  //     console.log(e);
+  //     return;
+  //   }
+  // }
+
+  // @Query(() => Board, { name: 'findtest' })
+  // findOneTest(@Args('findtest') boardOneInputType: BoardOneInputType) {
+  //   console.log(this.boardService.findOneBoard(boardOneInputType));
+  //   return this.boardService.findOneBoard(boardOneInputType);
+  // }
+
   // @Query(() => [Board], { name: 'boards' })
   // async findAl(@Args() args: BoardAllInput): Promise<Board[]> {
   //   return this.boardService.findAll();
   // }
-  @Query(() => Board, { name: 'boards' })
-  async findAll(
-    @Args('boards') boarAllInput: BoardAllInput, // : Promise<Board >
-  ) {
-    return this.boardService.findAllBoard(boarAllInput);
-  }
+
+  // !todo Board => BoardAllOutPut
 
   // @Query(() => String, { name: 'searchs' })
   // getAllPosts(@Args('searchs') { offset, limit }: PaginationParams) {

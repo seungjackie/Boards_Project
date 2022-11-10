@@ -9,6 +9,8 @@ import Login from "./pages/Login";
 import Test from "./pages/Test";
 import BoardPost from "./pages/BoardPost";
 import PrivateRoute from "./components/PrivateRoute";
+import BoardEdit from "./pages/BoardEdit";
+import TestParams from "./pages/TestParams";
 
 function Router(props) {
   const [authenticate, setAuthenticate] = useState(false);
@@ -23,7 +25,9 @@ function Router(props) {
       <br />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/board/:id" element={<BoardDetail />} />
+        <Route path="/board/:boardNum" element={<BoardDetail />} />
+        {/* <Route path="/edit" element={<BoardEdit />} /> */}
+        <Route path="/edit/:id" element={<BoardEdit />} />
         <Route path="/boardpost" element={<BoardPost />} />
         <Route path="/login" element={<Login auth={setAuthenticate} />} />
         <Route
@@ -31,6 +35,7 @@ function Router(props) {
           element={<PrivateRoute authenticate={authenticate} />}
         />
         <Route path="/test" element={<Test />} />
+        <Route path="/test/:boardNum" element={<TestParams />} />
         <Route path="/board/search" element={<BoardSearch />} />
       </Routes>
     </HashRouter>
