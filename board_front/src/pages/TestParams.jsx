@@ -8,7 +8,7 @@ import { BOARD_ONE } from "../gql/board.gql";
 const TestParams = () => {
   const { boardNum } = useParams();
 
-  console.log(boardNum);
+  //   console.log(boardNum);
 
   const { loading, error, data } = useQuery(BOARD_ONE, {
     variables: { boardSetNum: parseInt(boardNum) },

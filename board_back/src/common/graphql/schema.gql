@@ -31,22 +31,29 @@ scalar DateTime
 
 type Query {
   userAll: [User!]!
-  userOne(userId: String!): [User!]!
+  userFindOne(userFindOneInput: FindOneUserInput!): User!
+  useNumFindOne(userNumFindOne: FindOneUserNumInput!): User!
   departmentAll: [Department!]!
   departmentOne(deptCode: String!): Department!
   boardAll: [Board!]!
   count: Float!
-  boards(boards: BoardAllInput!): Board!
-  boardOne(boardOneInput: BoardOneInput!): Board!
+  findAllBoard_resolver(boards: BoardAllInput!): Boolean!
+  findBoardOne(id: ID!): Board!
+}
+
+input FindOneUserInput {
+  """유저 Id"""
+  userId: String!
+}
+
+input FindOneUserNumInput {
+  """사번"""
+  userNum: String!
 }
 
 input BoardAllInput {
-  skip: Int!
-  take: Int!
-}
-
-input BoardOneInput {
-  boardSetNum: Int
+  page: Int!
+  limit: Int!
 }
 
 type Mutation {
@@ -55,6 +62,7 @@ type Mutation {
   createDepartment(createDepartmentInput: CreateDepartmentInput!): Department!
   createBoard(createBoardInput: CreateBoardInput!): Board!
   updateBoard(input: UpdateBoardDto!): Boolean!
+  delete(id: ID!): String!
 }
 
 input CreateUserInput {

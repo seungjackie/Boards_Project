@@ -32,6 +32,11 @@ export class User {
   @Field(() => String)
   deptCode: string;
 
+  // @ManyToOne(() => Department)
+  // @JoinColumn({ name: 'deptCode' })
+  // @Field()
+  // department: Department;
+
   // @Column({ type: 'varchar' })
   // @Field()
   // dName: string;

@@ -15,14 +15,29 @@ export class BoardAllInput {
   @Min(0) // 0부터 시작?
   @Field(() => Int)
   // !Todo 넘버로 할시 에러
-  skip: number;
+  page: number;
 
   @IsOptional()
   // @Type(() => Number)
   @IsNumber()
-  @Min(1)
-  @Max(20)
+  // @Min(1)
+  // @Max(20)
   @Field(() => Int)
   // !Todo number 로 할시 에러
-  take: number;
+  limit: number;
+
+  // @Field(() => Boolean)
+  // ok: boolean;
+
+  // @Field(() => Int)
+  // @Min(0)
+  // skip = 0;
+
+  // @Field(() => Int)
+  // @Min(1)
+  // @Max(50)
+  // take = 25;
+
+  // @Field(() => Number)
+  // count: number;
 }

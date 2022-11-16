@@ -1,23 +1,36 @@
 import React, { useState } from "react";
 import "./BoardDetail.css";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import { BOARD_ADD } from "../gql/board.gql";
+import { useNavigate } from "react-router-dom";
+import { USER_ONE } from "../gql/user.gql";
 
 const BoardPost = () => {
   const [inputBoardTitle, setInputBoardTitle] = useState("");
   const [inputBoardContents, setInputBoardContents] = useState("");
-  const [inputBoardNum, setInputBoardNum] = useState("");
   const [inputUserNum, setInputUserNum] = useState("");
 
+  const navigate = useNavigate();
+
   let now = new Date();
-  console.log(now);
+
+  const loginIdtest = sessionStorage.getItem("loginId");
+
+  const { loading, error, data } = useQuery(USER_ONE, {
+    variables: { userId: loginIdtest },
+  });
+
+  console.log(data);
+
+  console.log(loginIdtest);
+
+  // console.log(data, "asdfnjasdfb hbahsdfbh ");
 
   const [BoardAdd] = useMutation(BOARD_ADD, {
     variables: {
       title: inputBoardTitle,
       contents: inputBoardContents,
-      boardNum: inputBoardNum,
-      userNum: inputUserNum,
+      userNum: data?.userFindOne.userNum,
     },
   });
 
@@ -25,6 +38,17 @@ const BoardPost = () => {
     const a = await BoardAdd();
     console.log(a);
     console.log("inputTitle======", inputBoardTitle);
+    // if (inputBoardTitle === "") {
+    //   alert("title을 작성해 주세요");
+    // } else if (inputBoardContents === "") {
+    //   alert("본문을 작성해 주세요");
+    // } else if (inputUserNum === "") {
+    //   alert("유저를 등록해 주세요");
+    // } else {
+    alert("글 작성이 완료 되었습니다.");
+    navigate("/");
+    window.location.reload();
+    // }
   };
 
   return (
@@ -35,13 +59,20 @@ const BoardPost = () => {
         <div className="div1">작성일</div>
         <div className="div2">{now.toLocaleDateString("ko-kr")}</div>
         <div className="div3">작성자</div>
-        <div className="div4">박승재 / 신성장 기술팀</div>
+        <div className="div4">
+          <input
+            value={data?.userFindOne.userName}
+            disabled
+            // onChange={(e) => setInputUserNum(e.target.value)}
+          />
+        </div>
       </div>
       <div className="container1">
         <div className="div5">제목</div>
         <div className="div6">
           <input
             value={inputBoardTitle}
+            style={{ width: "100%", height: "100%" }}
             onChange={(e) => setInputBoardTitle(e.target.value)}
           />
         </div>
@@ -51,6 +82,7 @@ const BoardPost = () => {
         <div className="div10">
           <input
             value={inputBoardContents}
+            style={{ width: "100%", height: "100%" }}
             onChange={(e) => setInputBoardContents(e.target.value)}
           />
         </div>

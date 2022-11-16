@@ -16,7 +16,12 @@ function Router(props) {
   const [authenticate, setAuthenticate] = useState(false);
 
   useEffect(() => {
-    console.log("로그인 제한 테스트", authenticate);
+    if (sessionStorage.getItem("loginId") === null) {
+      // console.log("isLogin?? :: ", authenticate);
+    } else {
+      setAuthenticate(true);
+      // console.log("isLogin?? ::", authenticate);
+    }
   }, [authenticate]);
 
   return (
@@ -24,12 +29,11 @@ function Router(props) {
       <Navigation />
       <br />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/board/:boardNum" element={<BoardDetail />} />
-        {/* <Route path="/edit" element={<BoardEdit />} /> */}
+        <Route path="/" element={<Home auth={authenticate} />} />
+        <Route path="/board/:id" element={<BoardDetail />} />
         <Route path="/edit/:id" element={<BoardEdit />} />
         <Route path="/boardpost" element={<BoardPost />} />
-        <Route path="/login" element={<Login auth={setAuthenticate} />} />
+        <Route path="/login" element={<Login auth={authenticate} />} />
         <Route
           path="/baordpost"
           element={<PrivateRoute authenticate={authenticate} />}

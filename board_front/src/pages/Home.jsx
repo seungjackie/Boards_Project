@@ -4,18 +4,17 @@ import "./Home.css";
 import { gql, useQuery } from "@apollo/client";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
-import { BOARD_GET } from "../gql/board.gql";
+import { BOARD_FILTER_GET, BOARD_GET } from "../gql/board.gql";
 import { useNavigate, useParams } from "react-router-dom";
 import TableComponent from "../components/TableComponent";
 import Pagination from "../components/Pagination";
 import Searchbar from "../components/Searchbar";
 import LabelOption from "../components/LabelOption";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { USER_ONE } from "../gql/user.gql";
 
-function Home() {
-  const { loading, error, data } = useQuery(BOARD_GET); // 개수 제한 index
+function Home({ auth }) {
   const navigate = useNavigate();
-  console.log(data);
 
   // 5개의 게시물로 보여주겠다.
   const [limit, setLimit] = useState(5);
@@ -23,6 +22,15 @@ function Home() {
   const [page, setPage] = useState(1);
   // 페이지 -1에서 자르겟다.
   const offset = (page - 1) * limit;
+  // const { loading, error, data } = useQuery(BOARD_FILTER_GET, {
+  //   variables: { page: page, limit: limit },
+  // }); 
+  const { loading, error, data } = useQuery(BOARD_GET, {
+    variables: { page: page, limit: limit },
+  }); 
+
+
+  console.log(data,"datttaa")
 
   // 검색
   const [search, setSearch] = useState("");
@@ -48,15 +56,29 @@ function Home() {
     );
   });
 
+  const onLogOut = () => {
+    sessionStorage.removeItem("loginId");
+    navigate("/login");
+    console.log("logout");
+    window.location.reload();
+    // console.log(sessionStorage);
+  };
+
+  console.log(sessionStorage);
+
+  // console.log(boardTitle, "boardTitle<<<");
+
   // 바뀌는 값 적용
   useEffect(() => {
+    // 로그인 상태 확인
     if (loading) {
-      console.log(data);
+      // console.log(data);
     }
-  }, [data, loading, setLimit]); // 바뀌는 값 적용
+  }, [data, loading, setLimit, sessionStorage]); // 바뀌는 값 적용
 
   if (loading) return <Loading />;
   if (error) return <Error />;
+  console.log(auth);
 
   // console.log(setLimit, "<<<<< >>>>>");
 
@@ -67,9 +89,14 @@ function Home() {
           <div className="board_title">게시판</div>
         </div>
         <div className="board_second_container">
-          <div className="board_Add" onClick={goToPostBoard}>
-            글 작성
-          </div>
+          {auth ? (
+            <>
+              <div className="board_Add" onClick={goToPostBoard}>
+                글 작성
+              </div>
+              <button onClick={onLogOut}> log out </button>
+            </>
+          ) : null}
           <div className="search_main">
             <Searchbar search={search} onChange={onChange} />
           </div>
@@ -92,15 +119,11 @@ function Home() {
             </tr>
           </thead>
           <tbody>
-            {/*todo */}
-            {boardTitle
-              .slice(offset, offset + limit)
-              .sort((a, b) => b - a)
-              .map((board, index) => {
-                return (
-                  <TableComponent key={index} index={index} boardData={board} />
-                );
-              })}
+            {boardTitle.slice(offset, offset + limit).map((board, index) => {
+              return (
+                <TableComponent key={index} index={index} boardData={board} />
+              );
+            })}
           </tbody>
         </table>
 

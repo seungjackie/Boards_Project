@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 import { CreateBoardInput } from './dto/create-board.input';
 import { Board } from './entities/board.entity';
 import { BoardAllInput } from './dto/board-all.input';
@@ -23,7 +23,9 @@ export class BoardService {
   }
 
   findAll() {
-    return this.boardRepository.find();
+    return this.boardRepository.findAndCount({
+      order: { createTime: 'DESC' },
+    });
   }
 
   // promise는 aync await을 사용하면 사라진다.
@@ -33,38 +35,92 @@ export class BoardService {
     return count;
   }
 
-  async findAllBoard_service(
-    // 스킵 or take 지정해주기
-    //  skip을 여기서 정해줘도 똑같다.
-    args: BoardAllInput = { skip: 0, take: 5 }, // skip이랑 왜 take랑 정해주는지
-  ) /* : Promise<BoardAllOutput> */ {
-    // board oupt으로 사용하기 위해서 타입을 결정.
-    const boards = await this.boardRepository.findAndCount({
-      skip: args.skip,
-      take: args.take,
+  // update
+  updateBoard({ boardNum, data }: UpdateBoardDto) {
+    // ! todo 데이터 변경하는거 구글링
+    return this.boardRepository.update(boardNum, {
+      ...data,
+      // 현재 시간 기준으로 스트링 하기
+      createTime: Date().toLocaleString(),
     });
+  }
 
+  async findAllBoard_service({ page, limit }: BoardAllInput) {
+    const boards = await this.boardRepository.findAndCount({
+      skip: limit * (page - 1),
+      take: limit,
+      order: { createTime: 'DESC' },
+    });
     if (boards) {
-      console.log(boards);
-      // return name;
-      return;
+      console.log(boards, 'board');
+      return boards;
     } else {
       console.log('boards Skip/ Take error');
     }
-
-    // console.log(boards); // 스킵 + limit 숫자를 통해 데이터 량 표시
-
-    // return boards.map((item, index) => {
-    //   return { item, index };
-    // });
-
-    // const name = boards!;
   }
 
-  updateBoard({ boardNum, data }: UpdateBoardDto) {
-    return this.boardRepository.update(boardNum, { ...data });
+  // 게시글 찾기
+  async findOneBoard(id: number): Promise<Board> {
+    return await this.boardRepository.findOne({ where: { boardNum: id } });
   }
 
+  // 게시글 삭제
+  async deleteBoard(id: number): Promise<boolean> {
+    const result = await this.boardRepository.delete(id);
+    // delete로 삭제 된다면 결과값으로 1로 돌아온다. => 해당 수행에 영향을 받은 데이터가 1개 있다.
+    if (result.affected === 0) {
+      throw new NotFoundException(`Could not find a board with id ${id}`);
+      return false;
+    }
+
+    return true;
+  }
+
+  // test 1 데이터 제한
+  // async find({ query }): Promise<BoardAllInput> {
+  //   const take = query.take || 10;
+  //   const skip = query.skip || 0;
+  //   const keyword = query.keyword || '';
+
+  //   const [result, total] = await this.boardRepository.findAndCount({
+  //     where: { title: Like('%' + keyword + '%') },
+  //     order: { createTime: 'DESC' },
+  //     take: take,
+  //     skip: skip,
+  //   });
+
+  //   return {
+  //     data: result,
+  //     count: total,
+  //   };
+  // }
+
+  // test 2 데이터 제한
+  // async getAll({ page, limit}): Promise<BoardAllInput> {
+  //   try {
+  //     console.log(page);
+  //     console.log(limit);
+  //     return {
+  //       ok: true,
+  //       data: await this.boardRepository.find({
+  //         skip: (page - 1) * limit,
+  //         take: limit,
+  //       }),
+  //     };
+  //   } catch (e) {
+  //     return {
+  //       ok: false,
+  //       error: e,
+  //     };
+  //   }
+  // }
+
+  // 조회수
+  // readCount({ cnt }: Board) {
+  //   const count = cnt.readUser
+  // }
+
+  // 테스트 안됨.
   // async findOne({ boardSetNum }: BoardOneInput) {
   //   const boardOne = await this.boardRepository.findOne({
   //     where: { boardNum: boardSetNum },
@@ -72,12 +128,30 @@ export class BoardService {
   //   return boardOne;
   // }
 
-  async findOne({ boardSetNum }: BoardOneInput) {
-    const boardOne = await this.boardRepository.findOne({
-      where: { boardNum: boardSetNum },
-    });
-    return boardOne;
-  }
+  // async findOneBoardtest(id: number): Promise<Board> {
+  //   const test = await this.boardRepository.findOne({
+  //     where: { boardNum: id },
+  //   });
+  //   if (!test) {
+  //     console.log(' not found');
+  //     return {
+  //       ok: false,
+  //     };
+  //   }
+  //   await this.boardRepository.delete(test);
+  // }
+
+  // async deleteBoard(id: number): Promise<Boolean> {}
+
+  // 데이터 제한
+
+  // console.log(boards); // 스킵 + limit 숫자를 통해 데이터 량 표시
+
+  // return boards.map((item, index) => {
+  //   return { item, index };
+  // });
+
+  // const name = boards!;
 
   // findOneBoard({ boardFindOneNum }: BoardOneInputType) {
   //   console.log(boardFindOneNum, '<<<<<');

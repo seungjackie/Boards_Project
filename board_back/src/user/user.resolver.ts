@@ -8,6 +8,8 @@ import bcrypt from 'bcrypt';
 import sha256 from 'crypto-js/sha256';
 import rand from 'csprng';
 import { LoginInput } from './dto/user.login';
+import { FindOneUserInput } from './dto/user-findone.input';
+import { FindOneUserNumInput } from './dto/user-findUserNum.input';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -23,14 +25,24 @@ export class UserResolver {
     return this.userService.findAll();
   }
 
-  @Query(() => [User], { name: 'userOne' })
-  findOne(@Args('userId', { type: () => String }) userId: string) {
-    return this.userService.findOne(userId);
-  }
-
+  // 로그인
   @Mutation(() => Boolean, { name: 'userCheck' })
   login(@Args('loginInput') loginInput: LoginInput) {
     // LoginInput으로 데이터 확인
     return this.userService.login(loginInput);
+  }
+
+  // 유저 찾기
+  @Query(() => User, { name: 'userFindOne' })
+  findOne(@Args('userFindOneInput') findOneUser: FindOneUserInput) {
+    return this.userService.findUser(findOneUser);
+  }
+
+  // 유저 num 찾기
+  @Query(() => User, { name: 'useNumFindOne' })
+  findUserNum(
+    @Args('userNumFindOne') findOneUserNumInput: FindOneUserNumInput,
+  ) {
+    return this.userService.findUserNum(findOneUserNumInput);
   }
 }

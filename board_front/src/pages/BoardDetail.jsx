@@ -1,79 +1,137 @@
-import { useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import {
+  BOARD_DELETE,
+  BOARD_FINDONE,
   BOARD_GET,
   BOARD_GET_ONE,
   BOARD_GET_ONE_TEST,
   BOARD_ONE,
 } from "../gql/board.gql";
 import "./BoardDetail.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { USER_USERNUM } from "../gql/user.gql";
 
 const BoardDetail = () => {
   const location = useLocation();
-  //   console.log(state, "<<< state")
-  // const { id } = useParams();
-  // console.log(id, " <<<<   id ");
+  const navigate = useNavigate();
 
-  const { boardNum } = useParams();
-  const { loading, error, data } = useQuery(BOARD_ONE, {
-    variables: { boardSetNum: parseInt(boardNum) }, // boardNum을 int로 형변환
+  const { id } = useParams();
+
+  const QueryMultiple = () => {
+    const res1 = useQuery(BOARD_FINDONE, {
+      variables: { id: parseInt(id) },
+    });
+    const res2 = useQuery(USER_USERNUM, {
+      variables: { userNum: "U000001" },
+    });
+
+    return [res1, res2];
+  };
+
+  // const QueryMu
+
+  const [{ data: data1 }, { data: data2 }] = QueryMultiple();
+  console.log(data1, ",<");
+
+  const { loading, error, data } = useQuery(USER_USERNUM, {
+    variables: { userNum: data1?.findBoardOne.userNum },
   });
 
-  // test데이터는 잘 불러와 짐
-  // const { loading, error, data } = useQuery(BOARD_GET); // 개수 제한 index
+  const [BoardDeleteOne] = useMutation(BOARD_DELETE, {
+    variables: { id: parseInt(data1?.boardNum) },
+  });
 
-  // real data
-  // const { loading, error, data } = useQuery(BOARD_GET_ONE, {
-  //   variables: { boardFindOneNum: id },
-  // });
-  // console.log(data, "data");
+  const goToEdit = (event) => {
+    event.stopPropagation();
+    // console.log("edit");
+    navigate(`/edit/${parseInt(data1?.findBoardOne.boardNum)}`);
+  };
 
-  // const { loading, error, data } = useQuery(BOARD_ONE, {
-  //   variables: { boardSetNum: parseInt(id) }, // boardNum을 int로 형변환
+  console.log(data1?.findBoardOne.boardNum, " 데이터 확인");
+
+  console.log(data1, ":ASDFsdafkjnn><<>>");
+
+  const goToDelete = async (event) => {
+    event.stopPropagation();
+    // console.log("del");
+    alert("삭제 되었습니다.");
+    await BoardDeleteOne();
+    window.location.reload();
+    navigate("/");
+  };
+
+  console.log(data, "<<<<<<<<<<");
+
+  console.log(data1?.findBoardOne.userNum, "asdfnjsdfn j");
+  // console.log(data2, "data 2");
+
+  // const { loading, error, data } = useQuery(BOARD_FINDONE, {
+  //   variables: { id: parseInt(id) },
   // });
+
+  // const result = useQueries([
+  //   {
+  //     queryKey: BOARD_FINDONE,
+  //     variables: { id: parseInt(id) },
+  //   },
+  // ]);
+
+  // console.log(data3, ",,,, data3");
 
   useEffect(() => {
-    // if (!loading) {
-    // console.log(data.boardOne);
-    // }
-  }, [data]);
+    if (!loading) {
+      console.log(data, "data<<");
+      console.log(data, "asdfnjsdfn j");
+    }
+  }, [data, loading]);
 
   const state = location?.state;
   const boardData = state?.data;
 
-  // if (loading) return <Loading />
-  // if (error) return <Error />
+  if (loading) return <Loading />;
+  if (error) return <Error />;
 
   return (
     <div className="DetailMain">
-      {/* <div>
-        {data.boardAll.map((item) => (
-          <div>title: {item.title}</div>
-        ))}
-      </div> */}
-      ;
+      {data?.useNumFindOne?.userId === sessionStorage.getItem("loginId") ? (
+        <>
+          <FontAwesomeIcon
+            icon={faPen}
+            className="Home_icon_margin"
+            onClick={(event) => goToEdit(event)}
+          />
+          <FontAwesomeIcon
+            icon={faTrash}
+            className="Home_icon_margin"
+            onClick={(event) => goToDelete(event)}
+          />
+        </>
+      ) : null}
       <div className="container1">
         <div className="div1">작성일</div>
         <div className="div2">
-          1{/* {boardData.createTime.slice(0, -14)} */}
+          {data1.findBoardOne.createTime.slice(0, -14)}
         </div>
         <div className="div3">작성자</div>
-        <div className="div4">박승재 / 신성장 기술팀</div>
+        <div className="div4">{data.useNumFindOne.userName}</div>
       </div>
       <div className="container1">
         <div className="div5">제목</div>
         <div className="div6">
-          <h1>1{/* {boardData.title} */}</h1>
+          <h1>{data1.findBoardOne.title}</h1>
         </div>
       </div>
       <div className="container2">
         <div className="div9">본문</div>
         <div className="div10">
-          <h1>2{/* {boardData.contents} */}</h1>
+          <h1>{data1.findBoardOne.contents}</h1>
         </div>
       </div>
     </div>

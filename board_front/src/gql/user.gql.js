@@ -22,3 +22,25 @@ export const USER_CHECK = gql`
     )
   }
 `;
+
+export const USER_ONE = gql`
+  query findOneUser($userId: String!) {
+    userFindOne(userFindOneInput: { userId: $userId }) {
+      userId
+      userPw
+      userNum
+      userName
+    }
+  }
+`;
+
+export const USER_USERNUM = gql`
+  query findUserNum($userNum: String!) {
+    useNumFindOne(userNumFindOne: { userNum: $userNum }) {
+      deptCode
+      userId
+      userNum
+      userName
+    }
+  }
+`;

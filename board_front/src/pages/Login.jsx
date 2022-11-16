@@ -13,6 +13,9 @@ const Login = ({ auth }) => {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
 
+  // 로그인 시 세션 남기기
+  let sessionStorage = window.sessionStorage;
+
   // console.log("inputId", inputId);
   // console.log("inputPw", inputPw);
 
@@ -20,16 +23,21 @@ const Login = ({ auth }) => {
     variables: { LoginInputId: inputId, LoginInputPw: inputPw },
   });
 
-  const userCheck = async () => {
+  const chekOnUser = async () => {
     const loginAuth = await login();
     console.log(loginAuth, "<<< 데이터 확인");
     console.log("input ID :" + inputId, "input PW : " + inputPw);
     console.log("login auth :" + loginAuth.data.userCheck);
+    console.log(JSON.stringify(sessionStorage), "asdfnjsadfnjfds ");
+    sessionStorage.setItem("loginId", inputId);
     if (loginAuth.data.userCheck) {
-      auth(true);
+      // auth(true);
       navigate("/");
+      window.location.reload();
     } else alert("아이디와 비밀번호를 다시 입력하세요.");
   };
+
+  // console.log(sessionStorage);
 
   return (
     <div className="Login_main">
@@ -48,7 +56,7 @@ const Login = ({ auth }) => {
           value={inputPw}
           onChange={(e) => setInputPw(e.target.value)}
         />
-        <button variant="primary" type="submit" onClick={userCheck}>
+        <button variant="primary" type="submit" onClick={chekOnUser}>
           LOGIN
         </button>
       </form>
