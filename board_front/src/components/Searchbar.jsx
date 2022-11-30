@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Searchbar = ({ search, onChange }) => {
+const Searchbar = ({ search, setSearch,onChange }) => {
   return (
     <div>
       <input

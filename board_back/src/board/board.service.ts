@@ -16,14 +16,16 @@ export class BoardService {
     private readonly boardRepository: Repository<Board>,
   ) {}
 
+  // 생성
   async create(createBoardInput: CreateBoardInput) {
     return await this.boardRepository.save({
       ...createBoardInput,
     });
   }
 
+  // 모든 게시 글
   findAll() {
-    return this.boardRepository.findAndCount({
+    return this.boardRepository.find({
       order: { createTime: 'DESC' },
     });
   }
@@ -38,30 +40,23 @@ export class BoardService {
   // update
   updateBoard({ boardNum, data }: UpdateBoardDto) {
     // ! todo 데이터 변경하는거 구글링
+    const now = new Date();
+
     return this.boardRepository.update(boardNum, {
       ...data,
+      // createTime: now.toLocaleDateString('ko-kr'),
+      // createTime: now.toLocaleDateString('ko-kr'),
+      createTime: new Date(),
       // 현재 시간 기준으로 스트링 하기
-      createTime: Date().toLocaleString(),
     });
-  }
-
-  async findAllBoard_service({ page, limit }: BoardAllInput) {
-    const boards = await this.boardRepository.findAndCount({
-      skip: limit * (page - 1),
-      take: limit,
-      order: { createTime: 'DESC' },
-    });
-    if (boards) {
-      console.log(boards, 'board');
-      return boards;
-    } else {
-      console.log('boards Skip/ Take error');
-    }
   }
 
   // 게시글 찾기
   async findOneBoard(id: number): Promise<Board> {
-    return await this.boardRepository.findOne({ where: { boardNum: id } });
+    const a = await this.boardRepository.findOne({ where: { boardNum: id } });
+    a.cnt += 1;
+    await this.boardRepository.save(a);
+    return a;
   }
 
   // 게시글 삭제
@@ -74,6 +69,30 @@ export class BoardService {
     }
 
     return true;
+  }
+
+  // 게시글 타이틀 찾기
+  async findSearchBoard(keyword) {
+    const result = await this.boardRepository.find({
+      where: [{ title: Like(`%${keyword}%`) }],
+    });
+    console.log(result);
+    return result;
+  }
+
+  // 데이터 제한
+  async findAllBoard_service({ page, limit }: BoardAllInput) {
+    const boards = await this.boardRepository.findAndCount({
+      skip: limit * (page - 1),
+      take: limit,
+      order: { createTime: 'DESC' },
+    });
+    if (boards) {
+      console.log(boards, 'board');
+      return boards;
+    } else {
+      console.log('boards Skip/ Take error');
+    }
   }
 
   // test 1 데이터 제한

@@ -61,6 +61,19 @@ export const BOARD_FINDONE = gql`
   }
 `;
 
+// 게시물 검색
+export const BOARD_SEARCHONE = gql`
+  query check1($keyword: String!) {
+    findSearchBoard(search: $keyword) {
+      title
+      cnt
+      createTime
+      userNum
+      boardNum
+    }
+  }
+`;
+
 // 클라이언트에서 안됌
 export const BOARD_GET_ONE = gql`
   query boardOneCheck($boardFindOneNum: Int!) {

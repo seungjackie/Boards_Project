@@ -40,7 +40,8 @@ function Router(props) {
         />
         <Route path="/test" element={<Test />} />
         <Route path="/test/:boardNum" element={<TestParams />} />
-        <Route path="/board/search" element={<BoardSearch />} />
+        {/* <Route path="/board/search" element={<BoardSearch />} /> */}
+        {/* <Route path="/board/search" element={<BoardSearchPage />} /> */}
       </Routes>
     </HashRouter>
   );

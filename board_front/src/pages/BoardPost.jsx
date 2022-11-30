@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./BoardDetail.css";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { BOARD_ADD } from "../gql/board.gql";
 import { useNavigate } from "react-router-dom";
 import { USER_ONE } from "../gql/user.gql";
+import Loading from "../components/Loading";
+import Error from "../components/Error";
 
 const BoardPost = () => {
   const [inputBoardTitle, setInputBoardTitle] = useState("");
   const [inputBoardContents, setInputBoardContents] = useState("");
-  const [inputUserNum, setInputUserNum] = useState("");
 
   const navigate = useNavigate();
 
@@ -19,12 +20,6 @@ const BoardPost = () => {
   const { loading, error, data } = useQuery(USER_ONE, {
     variables: { userId: loginIdtest },
   });
-
-  console.log(data);
-
-  console.log(loginIdtest);
-
-  // console.log(data, "asdfnjasdfb hbahsdfbh ");
 
   const [BoardAdd] = useMutation(BOARD_ADD, {
     variables: {
@@ -38,18 +33,18 @@ const BoardPost = () => {
     const a = await BoardAdd();
     console.log(a);
     console.log("inputTitle======", inputBoardTitle);
-    // if (inputBoardTitle === "") {
-    //   alert("title을 작성해 주세요");
-    // } else if (inputBoardContents === "") {
-    //   alert("본문을 작성해 주세요");
-    // } else if (inputUserNum === "") {
-    //   alert("유저를 등록해 주세요");
-    // } else {
     alert("글 작성이 완료 되었습니다.");
     navigate("/");
     window.location.reload();
-    // }
   };
+
+  useEffect(() => {
+    if (loading) {
+      console.log(loginIdtest);
+    }
+  }, [loading]);
+  if (loading) return <Loading />;
+  if (error) return <Error />;
 
   return (
     <div className="DetailMain">

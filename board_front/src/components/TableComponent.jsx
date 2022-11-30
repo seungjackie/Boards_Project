@@ -11,8 +11,10 @@ import { USER_ONE, USER_USERNUM } from "../gql/user.gql";
 import Loading from "./Loading";
 import Error from "./Error";
 
-const TableComponent = ({ boardData, index }) => {
+const TableComponent = ({ boardData }) => {
   const navigate = useNavigate();
+
+  const [count, setCount] = useState(1);
 
   // const {id} = useParams()
 
@@ -46,9 +48,12 @@ const TableComponent = ({ boardData, index }) => {
     }
   };
 
-  console.log(sessionStorage.getItem("loginId"));
+  // console.log(sessionStorage.getItem("loginId"));
 
-  useEffect(() => {}, [data, boardData]);
+  useEffect(() => {
+    setCount(count + 1);
+  }, [data, boardData]);
+  // console.log(boardData.index, "<<< lenth");
 
   if (loading) return <Loading />;
   if (error) return <Error />;
@@ -62,7 +67,7 @@ const TableComponent = ({ boardData, index }) => {
         )
       }
     >
-      <td colSpan="1"> No. {index + 1}</td>
+      <td colSpan="1">{/* No.{index + 1} */}*</td>
       <td colSpan="1">{boardData.title}</td>
       <td colSpan="2">{data?.useNumFindOne?.userName}</td>
       <td colSpan="1">{boardData.createTime.slice(0, -14)} </td>

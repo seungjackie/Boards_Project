@@ -37,8 +37,9 @@ type Query {
   departmentOne(deptCode: String!): Department!
   boardAll: [Board!]!
   count: Float!
-  findAllBoard_resolver(boards: BoardAllInput!): Boolean!
   findBoardOne(id: ID!): Board!
+  findSearchBoard(search: String!): [Board!]!
+  findAllBoard_resolver(boards: BoardAllInput!): Boolean!
 }
 
 input FindOneUserInput {

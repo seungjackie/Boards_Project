@@ -1,15 +1,10 @@
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Error from "../components/Error";
 import Loading from "../components/Loading";
-import {
-  BOARD_EDIT,
-  BOARD_FINDONE,
-  BOARD_GET,
-  BOARD_GET_ONE,
-} from "../gql/board.gql";
-import { USER_ONE, USER_USERNUM } from "../gql/user.gql";
+import { BOARD_EDIT, BOARD_FINDONE } from "../gql/board.gql";
+import { USER_USERNUM } from "../gql/user.gql";
 
 const BoardEdit = () => {
   const { id } = useParams();
@@ -17,8 +12,8 @@ const BoardEdit = () => {
 
   let now = new Date();
 
-  const loginIdtest = sessionStorage.getItem("loginId");
-  console.log(loginIdtest);
+  // const loginIdtest = sessionStorage.getItem("loginId");
+  // console.log(loginIdtest);
 
   // 글 수정 state
   const [updatetBoardTitle, setUpdateBoardTitle] = useState("");
@@ -35,11 +30,10 @@ const BoardEdit = () => {
 
   const [{ data: data1 }] = QueryMultiple();
 
+  // useNum으로 데이터 찾기
   const { loading, error, data } = useQuery(USER_USERNUM, {
-    variables: { userNum: data1?.findBoardOne.userNum },
+    variables: { userNum: data1?.findBoardOne?.userNum },
   });
-
-  console.log(data, "data ");
 
   // 글 수정하기
   const [BoardEdit] = useMutation(BOARD_EDIT, {
@@ -57,21 +51,23 @@ const BoardEdit = () => {
     // console.log(a);
     // console.log("inputTitle======", updatetBoardTitle);
     console.log(boaredit, "<<<boaredit");
-    alert("수정 되었습니다.");
     window.location.reload();
+    alert("수정 되었습니다.");
     navigate("/");
   };
 
   // 글 수정 리렌더링
-  useEffect(() => {}, [id]);
+  useEffect(() => {
+    if (loading) {
+      console.log(data1);
+    }
+  }, [data1, loading]);
 
   if (loading) return <Loading />;
   if (error) return <Error />;
 
   return (
     <div className="DetailMain">
-      {/* <p> 페이지의 파라미터는 {id} 입니다.</p> */}
-
       <div className="container1">
         <div className="div1">작성일</div>
         <div className="div2">

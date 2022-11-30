@@ -24,6 +24,7 @@ export class BoardResolver {
     return this.boardService.create(createBoardInput);
   }
 
+  // 전체 게시물
   @Query(() => [Board], { name: 'boardAll' })
   findAll() {
     return this.boardService.findAll();
@@ -34,44 +35,6 @@ export class BoardResolver {
   async getCountR(): Promise<number> {
     return this.boardService.getCount();
   }
-
-  // 찾기
-  // @Query(() => Board, { name: 'findAllBoards' })
-  // async findAllBoard_resolver(@Args('boards') boarAllInput: BoardAllInput) {
-  //   return this.boardService.findAllBoard_service(boarAllInput);
-  // }
-
-  // test
-  @Query((returns) => Boolean)
-  async findAllBoard_resolver(
-    @Args('boards') boarAllInput: BoardAllInput,
-  ): Promise<boolean> {
-    try {
-      await this.boardService.findAllBoard_service(boarAllInput);
-      return true;
-      // return await this.boardService.findAllBoard_service(boarAllInput);
-      // return await this.boardService.findAllBoard_service(boarAllInput);
-    } catch (e) {
-      console.log(e);
-      return false;
-    }
-  }
-
-  // @Query((returns) => Board)
-  // async findAllBoard_resolver(
-  //   @Args('boards') boarAllInput: BoardAllInput,
-  // ) /* : Promise<number> */ {
-  //   try {
-  //     // const a = this.boardService.findAllBoard_service(boarAllInput);
-  //     // const b = a as unknown as string;
-  //     const a = await this.boardService.findAllBoard_service(boarAllInput);
-  //     console.log(a, 'aaa<<');
-  //     // 리턴 값이 안 뜬다..
-  //     return await this.boardService.findAllBoard_service(boarAllInput);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
 
   // update
   @Mutation((returns) => Boolean)
@@ -95,6 +58,13 @@ export class BoardResolver {
     return await this.boardService.findOneBoard(parseInt(id));
   }
 
+  // 타이틀 찾기
+  @Query((returns) => [Board])
+  async findSearchBoard(@Args({ name: 'search' }) keyword: string) {
+    console.log(keyword);
+    return await this.boardService.findSearchBoard(keyword);
+  }
+
   // 게시물 삭제
   @Mutation(() => String, { name: 'delete' })
   async deleteBoard(
@@ -102,6 +72,50 @@ export class BoardResolver {
   ): Promise<boolean> {
     return this.boardService.deleteBoard(parseInt(id));
   }
+
+  // 데이터 제한 test
+  @Query((returns) => Boolean)
+  async findAllBoard_resolver(
+    @Args('boards') boarAllInput: BoardAllInput,
+  ): Promise<boolean> {
+    try {
+      await this.boardService.findAllBoard_service(boarAllInput);
+      return true;
+      // return await this.boardService.findAllBoard_service(boarAllInput);
+      // return await this.boardService.findAllBoard_service(boarAllInput);
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  }
+
+  // 게시글 찾기
+  // @Query((returns) => Board, { name: 'searchboards' })
+  // findSearchBoard(@Args('searchboards') boardSearch: any) {
+  //   return this.boardService.findSearchBoard(boardSearch);
+  // }
+
+  // 찾기
+  // @Query(() => Board, { name: 'findAllBoards' })
+  // async findAllBoard_resolver(@Args('boards') boarAllInput: BoardAllInput) {
+  //   return this.boardService.findAllBoard_service(boarAllInput);
+  // }
+
+  // @Query((returns) => Board)
+  // async findAllBoard_resolver(
+  //   @Args('boards') boarAllInput: BoardAllInput,
+  // ) /* : Promise<number> */ {
+  //   try {
+  //     // const a = this.boardService.findAllBoard_service(boarAllInput);
+  //     // const b = a as unknown as string;
+  //     const a = await this.boardService.findAllBoard_service(boarAllInput);
+  //     console.log(a, 'aaa<<');
+  //     // 리턴 값이 안 뜬다..
+  //     return await this.boardService.findAllBoard_service(boarAllInput);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }
 
   // @Mutation(() => Boolean)
   // async deleteBoardOne(@Args('id') id: number): Promise<Boolean> {

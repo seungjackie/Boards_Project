@@ -1,47 +1,46 @@
-import React, { useState, useEffect } from "react";
-import { gql, useQuery } from "@apollo/client";
-import {
-  BOARD_FINDONE,
-  BOARD_GET,
-  BOARD_ONE,
-  GET_USER,
-} from "../gql/board.gql";
-import { useNavigate, useParams } from "react-router-dom";
-import styled from "styled-components";
-import "./Test.css";
-import Loading from "../components/Loading";
-import Error from "../components/Error";
-import { USER_USERNUM } from "../gql/user.gql";
+import React, { useState, useRef } from "react";
+import { useQuery } from "@apollo/client";
+import { BOARD_SEARCHONE } from "../gql/board.gql";
 
 const Test = () => {
-  const navigate = useNavigate();
-  const { boardNum } = useParams();
+  // const navigate = useNavigate();
+  // const { boardNum } = useParams();
   // const { loading, error, data } = useQuery(USER_USERNUM, {
   // const { data } = useQuery(USER_USERNUM, {
   //   variables: { userNum: "U000001" },
   // });
 
-  const QueryMultiple = () => {
-    const res1 = useQuery(USER_USERNUM, {
-      variables: { userNum: "U000001" },
-    });
-    const res2 = useQuery(BOARD_FINDONE, {
-      variables: { id: 52 },
-    });
-    return [res1, res2];
+  // const QueryMultiple = () => {
+  //   const res1 = useQuery(USER_USERNUM, {
+  //     variables: { userNum: "U000001" },
+  //   });
+  //   const res2 = useQuery(BOARD_FINDONE, {
+  //     variables: { id: 52 },
+  //   });
+  //   return [res1, res2];
+  // };
+
+  // const [{ data: data1 }, { data: data2 }] = QueryMultiple();
+
+  // const { data } = useQuery(BOARD_FINDONE, {
+  //   variables: { id: 52 },
+  // });
+
+  const inputRef = useRef(null);
+
+  const [message, setMessage] = useState("");
+
+  const { data: searchData } = useQuery(BOARD_SEARCHONE, {
+    variables: { keyword: message },
+  });
+
+  const handleClick = (e) => {
+    e.preventDefault(); //새로고침 방지
+    setMessage(inputRef.current.value);
+    console.log("handleClick 👉️", message);
+    console.log(inputRef.current.value);
+    console.log(searchData?.findSearchBoard, "<< data");
   };
-
-  const [{ data: data1 }, { data: data2 }] = QueryMultiple();
-
-  const { data } = useQuery(BOARD_FINDONE, {
-    variables: { id: 52 },
-
-  })
-
-  console.log(data,"<<, data ")
-
-  console.log(data1);
-  console.log(data2, "hh");
 
   // if (loading) return <Loading />;
   // if (error) return <Error />;
@@ -54,12 +53,17 @@ const Test = () => {
 
   return (
     <div>
-      {/* {data.boardAll.map((item) => (
-        <div onClick={() => navigate(`/test/${dataCol}`)}>
-          <button> hihihihih </button>
-        </div>
-      ))} */}
-      {/* <button onClick={() => navigate("/test/2")}>hi</button> */}h
+      <input
+        ref={inputRef}
+        type="text"
+        // id="message"
+        // name="message"
+        autoComplete="off"
+      />
+      <button onClick={handleClick}>확인 </button>
+      {searchData?.findSearchBoard.map((item) => {
+        return item.title;
+      })}
     </div>
   );
 };

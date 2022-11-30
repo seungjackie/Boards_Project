@@ -1,17 +1,10 @@
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
-import {
-  BOARD_DELETE,
-  BOARD_FINDONE,
-  BOARD_GET,
-  BOARD_GET_ONE,
-  BOARD_GET_ONE_TEST,
-  BOARD_ONE,
-} from "../gql/board.gql";
+import { BOARD_DELETE, BOARD_FINDONE } from "../gql/board.gql";
 import "./BoardDetail.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
@@ -19,11 +12,11 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { USER_USERNUM } from "../gql/user.gql";
 
 const BoardDetail = () => {
-  const location = useLocation();
   const navigate = useNavigate();
 
   const { id } = useParams();
 
+  // test multiple query
   const QueryMultiple = () => {
     const res1 = useQuery(BOARD_FINDONE, {
       variables: { id: parseInt(id) },
@@ -35,29 +28,31 @@ const BoardDetail = () => {
     return [res1, res2];
   };
 
-  // const QueryMu
+  // multiple query 불러오기
+  const [{ data: data1 }] = QueryMultiple();
 
-  const [{ data: data1 }, { data: data2 }] = QueryMultiple();
-  console.log(data1, ",<");
-
+  // userNum으로 데이터 찾기
   const { loading, error, data } = useQuery(USER_USERNUM, {
     variables: { userNum: data1?.findBoardOne.userNum },
   });
 
+  // delete Mutation
   const [BoardDeleteOne] = useMutation(BOARD_DELETE, {
     variables: { id: parseInt(data1?.boardNum) },
   });
 
+  // edit 이동
   const goToEdit = (event) => {
     event.stopPropagation();
     // console.log("edit");
     navigate(`/edit/${parseInt(data1?.findBoardOne.boardNum)}`);
   };
 
-  console.log(data1?.findBoardOne.boardNum, " 데이터 확인");
+  // console.log(data1?.findBoardOne.boardNum, " 데이터 확인");
 
-  console.log(data1, ":ASDFsdafkjnn><<>>");
+  // console.log(data1, ":ASDFsdafkjnn><<>>");
 
+  // 삭제
   const goToDelete = async (event) => {
     event.stopPropagation();
     // console.log("del");
@@ -67,9 +62,9 @@ const BoardDetail = () => {
     navigate("/");
   };
 
-  console.log(data, "<<<<<<<<<<");
+  // console.log(data, "<<<<<<<<<<");
 
-  console.log(data1?.findBoardOne.userNum, "asdfnjsdfn j");
+  // console.log(data1?.findBoardOne.userNum, "asdfnjsdfn j");
   // console.log(data2, "data 2");
 
   // const { loading, error, data } = useQuery(BOARD_FINDONE, {
@@ -87,13 +82,10 @@ const BoardDetail = () => {
 
   useEffect(() => {
     if (!loading) {
-      console.log(data, "data<<");
-      console.log(data, "asdfnjsdfn j");
+      // console.log(data, "data<<");
+      // console.log(data, "asdfnjsdfn j");
     }
   }, [data, loading]);
-
-  const state = location?.state;
-  const boardData = state?.data;
 
   if (loading) return <Loading />;
   if (error) return <Error />;

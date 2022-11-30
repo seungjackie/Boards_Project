@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/seungjackie/Boards_Project#readme",
   "dependencies": {
-    "concurrently": "^7.5.0"
+    "concurrently": "^7.5.0",
+    "electron-builder": "^23.6.0"
   },
   "description": ""
 }
